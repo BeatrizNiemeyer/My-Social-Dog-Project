@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}My Social Dog{% endblock %}
+
+{% block body %}
+  <h1>My Social Dog</h1>
+
+
+  <h2>Log In</h2>
+  <form action="/login" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+
+    <p>
+      Password <input type="password" name="password">
+    </p>
+
+    <p>
+      <input type="submit">
+    </p>
+  </form>
+
+  <h2>Create an Account</h2>
+  <form action="/new_users" method="POST">
+    <p>
+      Fullname <input type="text" name="fullname">
+    </p>
+
+    <p>
+      Email <input type="text" name="email">
+    </p>
+
+    <p>
+      Password <input type="password" name="password">
+    </p>
+
+    <p>
+      Address <input type="text" name="address">
+    </p>
+
+    <h2>Dog Information:</h2>
+
+    <p>
+        Dog name <input type="text" name="dog_name">
+    </p>
+
+    <p>
+        Dog Age <input type="text" name="dog_age">
+    </p>
+
+    <p>
+        Dog Size 
+        <select name="dog_size">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select> 
+    </p>
+
+    <p>
+        Dog Breed <input type="text" name="dog_breed">
+    </p>
+
+    <p>
+      <input type="submit">
+    </p>
+  </form>
+
+  
+
+{% endblock %}
