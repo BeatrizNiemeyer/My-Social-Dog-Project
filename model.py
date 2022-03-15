@@ -16,7 +16,8 @@ class User(db.Model):
     address = db.Column(db.String, nullable=False)
 
     dogs = db.relationship("Dog", back_populates="user")
-    
+    #messages_sent = db.relationship("Message", backref="sender")
+    #messages_received = db.relationship("Message", backref="receiver")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email}>"
@@ -33,7 +34,7 @@ class Dog(db.Model):
     dog_age = db.Column(db.Integer, nullable=False)
     dog_size = db.Column(db.String, nullable=False)
     dog_breed = db.Column(db.String, nullable=True)
-    dog_photo = db.Column(db.String, nullable=True) 
+    dog_photo = db.Column(db.String, nullable=True)
 
     user = db.relationship("User", back_populates="dogs")
 
@@ -52,21 +53,16 @@ class Message(db.Model):
     message_body = db.Column(db.String, nullable=False)
     message_date = db.Column(db.DateTime)
 
-    sender = db.relationship(
-                "User",
-                backref="messages_sent",
-                foreign_keys="Message.sender_id")
-
-    receiver = db.relationship(
-                "User",
-                backref="messages_received",
-                foreign_keys="Message.receiver_id")
+    sender = db.relationship("User", backref="messages_sent", foreign_keys="Message.sender_id")
+    receiver = db.relationship("User", backref="messages_received", foreign_keys="Message.receiver_id")
 
     def __repr__(self):
         return f"<Message message_id={self.message_id} sender_id={self.sender_id} receiver_id={self.receiver_id}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///msd_data", echo=True):
+    """Conecting to db"""
+    
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

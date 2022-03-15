@@ -36,6 +36,21 @@ def create_dog_profile(user_id, dog_name, dog_age, dog_size, dog_breed):
     return dog
 
 
+def show_all_users():
+    """ Return all users """
+
+    users = User.query.all()
+
+    return users
+
+def show_all_dogs():
+    """Return all dogs """
+
+    dogs = Dog.query.all()
+
+    return dogs
+
+
 
 
 
