@@ -2,6 +2,30 @@
 {% block title %}Dog Profiles{% endblock %}
 
 {% block body %}
+
+<h1>Find you pup's Best Friend!</h1>
+
+<span> Check your messages here: 
+    <form action="/inbox">
+
+    <button type="submit"> Go to inbox </button>
+
+</form>
+
+</span>
+ <br>
+<span> Check your profile here: 
+    
+    <form action="/profile">
+
+    <button type="submit"> My profile </button>
+
+</form>
+
+</span>
+
+
+<h2>List of friends: </h2>
 <ul>
 {% for user in users %}
      <li>  
@@ -14,18 +38,19 @@
             <button type="submit" >Send Message</button>
 
             </form>
+        
         </h2>
 
             <ul>
                 {% for user in user.dogs %}
                     <li>  
-                        {{user.dog_name}}
+                        {{user.user.fullname}} is the owner of {{user.dog_name}}!
                     </li>
                     <li>  
-                        {{user.dog_age}} years
+                        {{user.dog_name}} is {{user.dog_age}} years old
                     </li>
                     <li>  
-                        {{user.dog_breed}}
+                        And this pup is a {{user.dog_breed}}
                     </li>
                 {% endfor %}
             </ul>

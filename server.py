@@ -119,6 +119,18 @@ def show_all_messages():
     return render_template('inbox.html', messages_sent=messages_sent, messages_received=messages_received, user_id=user_id)
 
 
+@app.route('/profile')
+def show_user_profile():
+    """ User's profile  page"""
+
+    if "user" in session:
+        user_id = session["user"]
+
+    user = crud.get_user_by_id(user_id)
+
+    return render_template("profile.html", user=user)
+
+
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
     connect_to_db(app)
