@@ -51,7 +51,8 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     receiver_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     message_body = db.Column(db.String, nullable=False)
-    message_date = db.Column(db.DateTime)
+    message_date = db.Column(db.String)
+ 
 
     sender = db.relationship("User", backref="messages_sent", foreign_keys="Message.sender_id")
     receiver = db.relationship("User", backref="messages_received", foreign_keys="Message.receiver_id")

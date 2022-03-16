@@ -21,10 +21,18 @@ def get_user_id_by_email(email):
 
     return user.user_id
 
+
 def get_user_by_email(email):
     """Return a user by their email """
 
     user = User.query.filter(User.email==email).first()
+
+    return user
+
+def get_user_by_id(user_id):
+    """Return a user by their email """
+
+    user = User.query.get(user_id)
 
     return user
 
@@ -60,11 +68,19 @@ def create_message(sender_id, receiver_id, body, date):
     return message
 
 
-def get_messages_by_id(user_id):
+def get_messages_sent(user_id):
 
     """Return all messages"""
 
     messages = Message.query.filter(Message.sender_id==user_id).all()
+
+    return messages
+
+def get_messages_received(receiver_id):
+
+    """Return all messages"""
+
+    messages = Message.query.filter(Message.receiver_id==receiver_id).all()
 
     return messages
 
@@ -74,6 +90,8 @@ def get_all_messages_by_users(fullname):
     person = Message.query.filter(Message.fullname==fullname).all()
 
     return person.message_body
+
+
 
 if __name__ == '__main__':
     from server import app

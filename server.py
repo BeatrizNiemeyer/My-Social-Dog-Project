@@ -80,7 +80,7 @@ def write_message():
     """Take user to textbox to write a message"""
 
     receiver_id = request.args.get('user_id')
-    # session['receiver_id'] = receiver_id
+    session['receiver_id'] = receiver_id
 
     return render_template("write_message.html", receiver_id=receiver_id)
 
@@ -95,7 +95,8 @@ def creating_inbox():
     receiver_id = request.form.get('receiver_id')
  
     body = request.form.get('message')
-    date = datetime.now()
+    now = datetime.now()
+    date = now.strftime("%d/%m/%Y %H:%M:%S")
     message = crud.create_message(user, receiver_id, body, date)
     # session['message'] = message
     db.session.add(message)
@@ -107,11 +108,15 @@ def creating_inbox():
 def show_all_messages():
     """ Return all messages """
     if "user" in session:
-        user = session["user"]
+        user_id = session["user"]
 
-    messages = crud.get_messages_by_id(user)
+    if "receiver_id" in session:
+        receiver_id = session["receiver_id"]
+
+    messages_sent = crud.get_messages_sent(user_id)
+    messages_received = crud.get_messages_sent(receiver_id)
     
-    return render_template('inbox.html', messages=messages)
+    return render_template('inbox.html', messages_sent=messages_sent, messages_received=messages_received, user_id=user_id)
 
 
 if __name__ == "__main__":

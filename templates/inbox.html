@@ -2,16 +2,31 @@
 {% block title %}Your Messages!{% endblock %}
 
 {% block body %}
-<ul>
-{% for message in messages%}
+<h1>Sent Messages</h1>
+<ul> 
+{% for message in messages_sent %}
       
      <li>  
-         <h2>{{message.receiver.fullname}}</h2>
+         <h2>To: {{message.receiver.fullname}}  -   Date:{{message.message_date}}</h2> 
             <li>  
                 {{message.message_body}}
             </li>
      </li>
 {% endfor %}
+</ul>  
+
+<h1>Received Messages</h1>
+<ul> 
+{% for message in messages_received %}
+     {% if message.receiver_id == user_id %}
+     <li>  
+         <h2>From: {{message.sender.fullname}}  -  Date:{{message.message_date}}</h2>
+            <li>  
+                {{message.message_body}}
+            </li>
+        </li>
+        {% endif %}
+   {% endfor %}
 
 </ul>   
 {% endblock %}
