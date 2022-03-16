@@ -7,34 +7,29 @@
      <li>  
          <h2>{{user.fullname}}
 
-
             <form action="/write_message" > 
+                
+            <input type="hidden"  name="user_id" value={{user.user_id}}>
 
-            <button type="submit">Send Message</button>
+            <button type="submit" >Send Message</button>
 
             </form>
         </h2>
 
+            <ul>
+                {% for user in user.dogs %}
+                    <li>  
+                        {{user.dog_name}}
+                    </li>
+                    <li>  
+                        {{user.dog_age}} years
+                    </li>
+                    <li>  
+                        {{user.dog_breed}}
+                    </li>
+                {% endfor %}
+            </ul>
      </li>
-
-     <ul>
-        {% for dog in dogs %}
-            {% if user.user_id == dog.user_id%}
-             <li>  
-                 {{dog.dog_name}}
-             </li>
-             <li>  
-                {{dog.dog_age}} years
-            </li>
-            <li>  
-                {{dog.dog_breed}}
-            </li>
-        {% endif%}
-        {% endfor %}
-        </ul>
-
 {% endfor %}
 </ul>
-
-
 {% endblock %}

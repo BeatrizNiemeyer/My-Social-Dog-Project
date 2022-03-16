@@ -28,6 +28,7 @@ def get_user_by_email(email):
 
     return user
 
+
 def create_dog_profile(user_id, dog_name, dog_age, dog_size, dog_breed):
     """ Create and return a dog profile """
 
@@ -51,20 +52,28 @@ def show_all_dogs():
     return dogs
 
 
+def create_message(sender_id, receiver_id, body, date):
+    """Create a message """
+
+    message = Message(sender_id=sender_id, receiver_id=receiver_id, message_body=body, message_date=date)
+
+    return message
 
 
+def get_messages_by_id(user_id):
 
+    """Return all messages"""
 
+    messages = Message.query.filter(Message.sender_id==user_id).all()
 
+    return messages
 
+def get_all_messages_by_users(fullname):
+    """ return all messages from a person """
 
+    person = Message.query.filter(Message.fullname==fullname).all()
 
-
-
-
-
-
-
+    return person.message_body
 
 if __name__ == '__main__':
     from server import app

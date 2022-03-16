@@ -3,6 +3,7 @@ from flask import (Flask, render_template, request, flash, session,
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "key"
@@ -70,15 +71,47 @@ def show_all_profiles():
     """ Return dog profiles """
 
     users = crud.show_all_users()
-    dogs = crud.show_all_dogs()
 
-    return render_template('all_profiles.html', users=users, dogs=dogs)
+    return render_template('all_profiles.html', users=users)
 
 
 @app.route('/write_message')
 def write_message():
+    """Take user to textbox to write a message"""
 
-    return render_template("write_message.html")
+    receiver_id = request.args.get('user_id')
+    # session['receiver_id'] = receiver_id
+
+    return render_template("write_message.html", receiver_id=receiver_id)
+
+
+@app.route('/inbox', methods = ['POST'])
+def creating_inbox():
+    "Creating inbox"
+
+    if "user" in session:
+        user = session["user"]
+
+    receiver_id = request.form.get('receiver_id')
+ 
+    body = request.form.get('message')
+    date = datetime.now()
+    message = crud.create_message(user, receiver_id, body, date)
+    # session['message'] = message
+    db.session.add(message)
+    db.session.commit()
+    return redirect("/inbox")
+
+
+@app.route('/inbox')
+def show_all_messages():
+    """ Return all messages """
+    if "user" in session:
+        user = session["user"]
+
+    messages = crud.get_messages_by_id(user)
+    
+    return render_template('inbox.html', messages=messages)
 
 
 if __name__ == "__main__":

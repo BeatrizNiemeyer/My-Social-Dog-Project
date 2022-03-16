@@ -4,10 +4,10 @@
 {% block body %}
 <h2>Write a message!</h2>
 
-<form>
-
+<form action="/inbox"  method="POST" >
+    <input type="hidden"  name="receiver_id" value={{receiver_id}}>
     <p>
-        Enter your message <textarea name="message" id="message"></textarea>
+        Enter your message <textarea name="message" ></textarea>
     </p>
 
     <input type="submit">

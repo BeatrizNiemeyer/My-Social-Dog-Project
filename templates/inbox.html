@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Your Messages!{% endblock %}
+
+{% block body %}
+<ul>
+{% for message in messages%}
+      
+     <li>  
+         <h2>{{message.receiver.fullname}}</h2>
+            <li>  
+                {{message.message_body}}
+            </li>
+     </li>
+{% endfor %}
+
+</ul>   
+{% endblock %}
