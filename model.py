@@ -19,8 +19,8 @@ class User(db.Model):
     #messages_sent = db.relationship("Message", backref="sender")
     #messages_received = db.relationship("Message", backref="receiver")
 
-    def __repr__(self):
-        return f"<User user_id={self.user_id} email={self.email}>"
+    # def __repr__(self):
+    #     return f"<User user_id={self.user_id} email={self.email}>"
 
 
 class Dog(db.Model):
@@ -38,8 +38,8 @@ class Dog(db.Model):
 
     user = db.relationship("User", back_populates="dogs")
 
-    def __repr__(self):
-        return f"<Dog dog_id={self.dog_id} dog_name={self.dog_name} dog_user={self.user_id}>"
+    # def __repr__(self):
+    #     return f"<Dog dog_id={self.dog_id} dog_name={self.dog_name} dog_user={self.user_id}>"
 
 
 class Message(db.Model):
@@ -51,14 +51,13 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     receiver_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     message_body = db.Column(db.String, nullable=False)
-    message_date = db.Column(db.String)
- 
+    message_date = db.Column(db.DateTime) 
 
     sender = db.relationship("User", backref="messages_sent", foreign_keys="Message.sender_id")
     receiver = db.relationship("User", backref="messages_received", foreign_keys="Message.receiver_id")
 
-    def __repr__(self):
-        return f"<Message message_id={self.message_id} sender_id={self.sender_id} receiver_id={self.receiver_id}>"
+    # def __repr__(self):
+    #     return f"<Message message_id={self.message_id} sender_id={self.sender_id} receiver_id={self.receiver_id}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///msd_data", echo=True):

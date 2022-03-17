@@ -68,29 +68,52 @@ def create_message(sender_id, receiver_id, body, date):
     return message
 
 
-def get_messages_sent(user_id):
 
-    """Return all messages"""
+def get_all_users():
+    """Return all users """
 
-    messages = Message.query.filter(Message.sender_id==user_id).all()
+    all_users = User.query.all()
+
+    return all_users
+
+
+def get_messages_sent_received(sender_id, receiver_id):
+    """get all the messages the user received and sent """
+
+    messages = Message.query.filter_by(sender_id=sender_id, receiver_id=receiver_id).all()
 
     return messages
 
-def get_messages_received(receiver_id):
+def sort_list_by_date(list_of_messages):
+    """ sort messages by date """
 
-    """Return all messages"""
+    sorted_messages = sorted(list_of_messages, key=lambda every_item: every_item.message_date)
 
-    messages = Message.query.filter(Message.receiver_id==receiver_id).all()
+    return sorted_messages
 
-    return messages
+def all_receiver_id():
 
-def get_all_messages_by_users(fullname):
-    """ return all messages from a person """
+    """ Group by receiver_id """
 
-    person = Message.query.filter(Message.fullname==fullname).all()
+    q = db.session.query(Message.receiver_id)
+    all_receiver_id = q.group_by("receiver_id")
 
-    return person.message_body
+    return all_receiver_id
 
+def inbox_function(user_id, receiver_id):
+    """ function used on lines 130 - 137, so there is less repetition """
+
+    #Getting all the messages sent and received from user
+    messages_from_me = get_messages_sent_received(user_id, receiver_id)
+    #Getting all the messages sent and received from the receiver user
+    messages_to_me = get_messages_sent_received(receiver_id, user_id)
+
+    # Concatenating the two lists above, so we have all the messages from/to user
+    messages = messages_from_me + messages_to_me
+    #Sorting the concatenated list by time, so it appears in cronologic time
+    sorted_messages_by_date = sort_list_by_date(messages)
+
+    return sorted_messages_by_date
 
 
 if __name__ == '__main__':

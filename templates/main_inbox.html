@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Your Messages!{% endblock %}
+
+{% block body %}
+<h1>Sent Messages</h1>
+
+{% for user in list_of_users_for_inbox %}
+<ul>
+    <form action="/show_inbox">
+        <input type="hidden"  name="user_id" value={{user.user_id}}>
+            <li>{{user.fullname}}</li>
+                <button type="submit" >Go to inbox</button>
+    </form>
+</ul>
+
+{% endfor %}
+{% endblock %}

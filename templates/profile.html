@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Dog Profiles{% endblock %}
+
+{% block body %}
+
+<h1>{{user.fullname}}'s Profile:</h1>
+<ul>
+<h2>Your Information</h2>
+<li>Name: {{user.fullname}}</li>
+<li>Email:{{user.email}}</li>
+<li>Password: {{user.password}}</li>
+<li>Address: {{user.address}}</li>
+</ul>
+
+<ul>
+<h2>Your dog Information:</h2>
+{% for dog in user.dogs %}
+    <li>Name: {{dog.dog_name}}</li>
+    <li> Age: {{dog.dog_age}}</li>
+    <li> Size: {{dog.dog_size}}</li>
+    <li> Breed: {{dog.dog_breed}}</li>
+    {% endfor %}
+</ul>
+
+<form action="/all_profiles">
+
+    <button type="submit"> Homepage </button>
+
+</form>
+
+{% endblock %}

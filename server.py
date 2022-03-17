@@ -21,9 +21,11 @@ def show_homepage():
 def login():
     """ Login with email and password """
 
+    #Getting data from the form
     email = request.form.get('email')
     password = request.form.get('password')
 
+    #Get user's password to check if the ented password is correct
     user_password = crud.get_password_by_email(email)
 
     if user_password == password:
@@ -39,6 +41,7 @@ def login():
 def register_user():
     """ Create a new user """
 
+    #Getting all the data from the form in homepage.html
     fullname = request.form.get('fullname')
     email = request.form.get('email')
     password = request.form.get('password')
@@ -48,18 +51,18 @@ def register_user():
     dog_size = request.form.get('dog_size')
     dog_breed = request.form.get('dog_breed')
     
+    #Getting user object to check if they are already registered 
     user = crud.get_user_by_email(email)
-    
 
     if user:
         flash('This email has already been used. Try a different email.')
     else:
-        new_user = crud.create_user(fullname, email, password, address)
-        db.session.add(new_user)
+        new_user = crud.create_user(fullname, email, password, address) 
+        db.session.add(new_user) #Adding the new user to data base
         db.session.commit()
         user = crud.get_user_id_by_email(email)
         dog = crud.create_dog_profile(user, dog_name, dog_age, dog_size, dog_breed)
-        db.session.add(dog)
+        db.session.add(dog) #Adding user's dog to the data base
         db.session.commit()
         flash('Your account has been successfully created. You can log in now')
 
@@ -70,15 +73,23 @@ def register_user():
 def show_all_profiles():
     """ Return dog profiles """
 
+    if "user" in session:
+        user_id = session["user"]
+    
+    user= crud.get_user_by_id(user_id)
+
+    #Get all user objects and display them on the page
     users = crud.show_all_users()
 
-    return render_template('all_profiles.html', users=users)
+    return render_template('all_profiles.html', users=users, user_id=user_id, user=user)
 
 
 @app.route('/write_message')
 def write_message():
     """Take user to textbox to write a message"""
 
+    #Getting the user_id from the button to send a message, on all_profiles.html
+    #And then setting that botton to a receiver_id, and then storing in a session
     receiver_id = request.args.get('user_id')
     session['receiver_id'] = receiver_id
 
@@ -92,31 +103,85 @@ def creating_inbox():
     if "user" in session:
         user = session["user"]
 
-    receiver_id = request.form.get('receiver_id')
- 
+    if "receiver_id" in session:
+        receiver_id = session["receiver_id"]
+    
+    #Getting all data from the form write_message.html
     body = request.form.get('message')
-    now = datetime.now()
-    date = now.strftime("%d/%m/%Y %H:%M:%S")
+    date = datetime.now()
     message = crud.create_message(user, receiver_id, body, date)
-    # session['message'] = message
     db.session.add(message)
     db.session.commit()
-    return redirect("/inbox")
+
+    return redirect("/inbox_")
 
 
-@app.route('/inbox')
+@app.route('/inbox_')
 def show_all_messages():
-    """ Return all messages """
+    """ Return all messages from a specific user """
+
     if "user" in session:
         user_id = session["user"]
 
     if "receiver_id" in session:
         receiver_id = session["receiver_id"]
 
-    messages_sent = crud.get_messages_sent(user_id)
-    messages_received = crud.get_messages_sent(receiver_id)
-    
-    return render_template('inbox.html', messages_sent=messages_sent, messages_received=messages_received, user_id=user_id)
+    #Getting all the messages sent and received from user
+    messages_from_me = crud.get_messages_sent_received(user_id, receiver_id)
+    #Getting all the messages sent and received from the receiver user
+    messages_to_me = crud.get_messages_sent_received(receiver_id, user_id)
+
+    # Concatenating the two lists above, so we have all the messages from/to user
+    messages = messages_from_me + messages_to_me
+    #Sorting the concatenated list by time, so it appears in cronologic time
+    sorted_messages_by_date = crud.sort_list_by_date(messages)
+
+    return render_template('inbox.html', sorted_messages_by_date=sorted_messages_by_date)
+
+@app.route('/main_inbox')
+def main_inbox():
+    """ return a list of user's name that exchanged messages """
+
+    if "user" in session:
+        user_id = session["user"]
+
+    if "receiver_id" in session:
+        receiver_id = session["receiver_id"]
+
+    #Getting all the user messages
+    all_user_messages = crud.get_messages_sent_received(user_id, receiver_id)
+    #Get all the receiver_id's from all_user_messages list, so there are no duplicate names in the "/main_inbox"
+    all_user_messages = crud.all_receiver_id()
+
+
+    list_of_users_for_inbox =[]
+    for message in all_user_messages:
+        if message.receiver_id != user_id: #so the user's name is not displayed
+            user = crud.get_user_by_id(message.receiver_id)
+            list_of_users_for_inbox.append(user) #appending the user's to the list, with no duplicates 
+
+    return render_template('main_inbox.html', list_of_users_for_inbox=list_of_users_for_inbox )
+
+
+
+@app.route('/show_inbox')
+def show_inbox():
+    """Show user names in inbox """
+
+    #This route is really similar to @app.route('/inbox_'). I created this route due the fact that I need to pass
+    # a new receveicer_id, coming from a button in the main_inbox html file.
+
+    if "user" in session:
+        user_id = session["user"]
+
+    #getting user_id from the button in main_inbox.html
+    receiver_id = request.args.get('user_id')
+
+    #Function used yo avoid repetiton, it consists on the content in lines 130 - 137
+    sorted_messages_by_date = crud.inbox_function(user_id, receiver_id)
+
+
+    return render_template('inbox.html', sorted_messages_by_date=sorted_messages_by_date)
 
 
 @app.route('/profile')
@@ -126,6 +191,7 @@ def show_user_profile():
     if "user" in session:
         user_id = session["user"]
 
+    #gettin the user info from user to display on their profile
     user = crud.get_user_by_id(user_id)
 
     return render_template("profile.html", user=user)
