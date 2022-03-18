@@ -84,6 +84,13 @@ def get_messages_sent_received(sender_id, receiver_id):
 
     return messages
 
+def user_all_messages(user_id):
+    """ get user's all messages """
+
+    all_messages = Message.query.filter_by(user_id=user_id)
+
+    return all_messages 
+    
 def sort_list_by_date(list_of_messages):
     """ sort messages by date """
 

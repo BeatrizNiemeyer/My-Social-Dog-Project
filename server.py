@@ -145,19 +145,28 @@ def main_inbox():
     if "user" in session:
         user_id = session["user"]
 
-    if "receiver_id" in session:
-        receiver_id = session["receiver_id"]
 
-    #Getting all the user messages
-    all_user_messages = crud.get_messages_sent_received(user_id, receiver_id)
-    #Get all the receiver_id's from all_user_messages list, so there are no duplicate names in the "/main_inbox"
-    all_user_messages = crud.all_receiver_id()
+    user = crud.get_user_by_id(user_id)
+    
+    #gettind ids for the list of names
+    list_of_receivers = []
+    for users in user.messages_sent:
+        if user.user_id == users.sender_id:
+            list_of_receivers.append(users.receiver_id)
+    
+    list_of_senders = []
 
+    for users in user.messages_received:
+        if user.user_id == users.receiver_id:
+            list_of_senders.append(users.sender_id)
+ 
+    list_of_ids = list_of_receivers + list_of_senders
+    list_of_ids = set(list_of_ids)
 
     list_of_users_for_inbox =[]
-    for message in all_user_messages:
-        if message.receiver_id != user_id: #so the user's name is not displayed
-            user = crud.get_user_by_id(message.receiver_id)
+    for each_id in list_of_ids:
+        if each_id != user_id: #so the user's name is not displayed
+            user = crud.get_user_by_id(each_id)
             list_of_users_for_inbox.append(user) #appending the user's to the list, with no duplicates 
 
     return render_template('main_inbox.html', list_of_users_for_inbox=list_of_users_for_inbox )
