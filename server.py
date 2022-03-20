@@ -204,7 +204,7 @@ def show_user_profile():
     if "user" in session:
         user_id = session["user"]
 
-    #gettin the user info from user to display on their profile
+    #getting the user info from user to display on their profile
     user = crud.get_user_by_id(user_id)
 
     return render_template("profile.html", user=user)
@@ -221,49 +221,59 @@ def search():
     users = crud.show_all_users()
   
     #getting info from searching bar:
-    dog_age = request.args.get('dog_age')
-    dog_size = request.args.get('dog_size')
-    dog_breed = request.args.get('dog_breed')
-
+    dog_age = request.args.get("dog_age")
+    dog_size = request.args.get("dog_size")
+    dog_breed = request.args.get("dog_breed")
+    searched_distance = request.args.get("distance")
+    dog_age = int(dog_age)
+    searched_distance = int(searched_distance)
 
     #creating a dictionary with the values from the search
     results = {}
     results["dog_age"] = dog_age
     results["dog_size"] = dog_size
     results["dog_breed"] = dog_breed
+    results["searched_distance"] = searched_distance
 
-
+    #getting latitude and longitud from user's address
+    user_coordinates = crud.get_coordinates(user.address)
+   
     #This list will contain the users with the dogs that "pass" the searching results
     list_of_searched_dogs = []
-    for user in users:
-        for every_user in user.dogs: #if the user pressed enter without input any value, it will redirect to /all_profiles page
-            if results["dog_size"] == "all_sizes" and results["dog_age"] == "all_ages" and results["dog_breed"] == "":
-                return redirect ("/all_profiles")
-            #if user input something in the searching bar, it will loop to every possible result and add the user in the 
-            #list_of_searched_dogs list, and render_template to /all_profiles
-            #I am converting the every_user.dog_age as a str to compare with the dog_age that will be a str
-            elif str(every_user.dog_age) == dog_age and every_user.dog_size == dog_size and every_user.dog_breed == dog_breed:
-                user = crud.get_user_by_id(every_user.user_id)
-                list_of_searched_dogs.append(user)
-            elif results["dog_age"] == "all_ages" and every_user.dog_size == dog_size and every_user.dog_breed == dog_breed:
-                user = crud.get_user_by_id(every_user.user_id)
-                list_of_searched_dogs.append(user)
-            elif str(every_user.dog_age) == dog_age and results["dog_size"] == "all_sizes" and every_user.dog_breed == dog_breed:
-                user = crud.get_user_by_id(every_user.user_id)
-                list_of_searched_dogs.append(user)
-            elif str(every_user.dog_age) == dog_age and every_user.dog_size == dog_size and results["dog_breed"] == "":
-                user = crud.get_user_by_id(every_user.user_id)
-                list_of_searched_dogs.append(user)
-            elif results["dog_age"] == "all_ages" and results["dog_size"] == "all_sizes" and  every_user.dog_breed == dog_breed:
-                user = crud.get_user_by_id(every_user.user_id)
-                list_of_searched_dogs.append(user)
-            elif results["dog_age"] == "all_ages" and every_user.dog_size == dog_size and results["dog_breed"] == "":
-                user = crud.get_user_by_id(every_user.user_id)
-                list_of_searched_dogs.append(user)
-            elif str(every_user.dog_age) == dog_age and results["dog_size"] == "all_sizes" and results["dog_breed"] == "":
-                user = crud.get_user_by_id(every_user.user_id)
-                list_of_searched_dogs.append(user)
-    
+
+    #if user press enter without entering any searching feature, it will redirect user to /all_profiles with all the profiles
+    if results["dog_size"] == "all_sizes" and results["dog_age"] == 17 and results["dog_breed"] == "" and results["searched_distance"] == 1000000:
+        return redirect ("/all_profiles")
+    else:    
+        for user in users:
+            #getting latitude and longitud from every user address
+            coordinates = crud.get_coordinates(user.address)
+            #calculating the distance between user and the other user
+            distance = crud.distance_between_users(user_coordinates, coordinates)
+            if distance <= results["searched_distance"]:
+                for every_user in user.dogs:
+                    if every_user.dog_age <= dog_age and every_user.dog_size == dog_size and every_user.dog_breed == dog_breed:
+                        user = crud.get_user_by_id(every_user.user_id)
+                        list_of_searched_dogs.append(user)
+                    elif results["dog_age"] == 17 and every_user.dog_size == dog_size and every_user.dog_breed == dog_breed:
+                        user = crud.get_user_by_id(every_user.user_id)
+                        list_of_searched_dogs.append(user)
+                    elif every_user.dog_age <=dog_age and results["dog_size"] == "all_sizes" and every_user.dog_breed == dog_breed:
+                        user = crud.get_user_by_id(every_user.user_id)
+                        list_of_searched_dogs.append(user)
+                    elif every_user.dog_age <=dog_age and every_user.dog_size == dog_size and results["dog_breed"] == "":
+                        user = crud.get_user_by_id(every_user.user_id)
+                        list_of_searched_dogs.append(user)
+                    elif results["dog_age"] == 17 and results["dog_size"] == "all_sizes" and  every_user.dog_breed == dog_breed:
+                        user = crud.get_user_by_id(every_user.user_id)
+                        list_of_searched_dogs.append(user)
+                    elif results["dog_age"] == 17 and every_user.dog_size == dog_size and results["dog_breed"] == "":
+                        user = crud.get_user_by_id(every_user.user_id)
+                        list_of_searched_dogs.append(user)
+                    elif every_user.dog_age <= dog_age and results["dog_size"] == "all_sizes" and results["dog_breed"] == "":
+                        user = crud.get_user_by_id(every_user.user_id)
+                        list_of_searched_dogs.append(user)
+        
     return render_template('all_profiles.html', users=list_of_searched_dogs, user_id=user_id, user=user)
         
 
@@ -276,6 +286,8 @@ def logout_user():
     flash("You are now logout")
 
     return redirect("/")
+
+    
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

@@ -1,4 +1,8 @@
 from model import db, User, Dog, Message, connect_to_db
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
+
+geolocator = Nominatim(user_agent="geopy.geocoders.options.default_user_agent = 'my-application'")
 
 def create_user(fullname, email, password, address):
     """Create and return a new user."""
@@ -122,6 +126,23 @@ def inbox_function(user_id, receiver_id):
 
     return sorted_messages_by_date
 
+
+def get_coordinates(address):
+    """ Get coordinates to calculate distance """
+
+
+    user_location = geolocator.geocode(address)
+    user_coordinates = (user_location.latitude, user_location.longitude)
+
+    return user_coordinates
+
+def distance_between_users(coordinate1, coordinate2):
+    """ Calculate distance between users """
+
+    distance = (geodesic(coordinate1,coordinate2).km)
+    distance_miles = distance * 0.625
+
+    return distance_miles
 
 if __name__ == '__main__':
     from server import app

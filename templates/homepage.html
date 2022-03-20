@@ -6,9 +6,16 @@
     <title>
       MySocialDog
     </title>
-
+    
+    {% for msg in get_flashed_messages() %}
+    <p class="flash-msg">
+      {{ msg }}
+    </p>
+  {% endfor %}
+  
+  <h1>My Social Dog</h1>
 <body>
-<h1>My Social Dog</h1>
+
 
 
 <h2>Log In</h2>

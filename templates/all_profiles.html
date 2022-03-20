@@ -17,15 +17,27 @@
 
             <ul>
                 {% for user in user.dogs %}
+                    {% if 1  > user.dog_age %}
                     <li>  
                         {{user.user.fullname}} is the owner of {{user.dog_name}}!
                     </li>
-                    <li>  
-                        {{user.dog_name}} is {{user.dog_age}} years old
+                    <li>      
+                        {{user.dog_name}} is less than a year old!
                     </li>
                     <li>  
-                        And this pup is a {{user.dog_breed}}
+                        And this pup is a {{user.dog_size}} {{user.dog_breed}}
                     </li>
+                    {% else %}
+                        <li>  
+                            {{user.user.fullname}} is the owner of {{user.dog_name}}!
+                        </li>
+                        <li>      
+                            {{user.dog_name}} is {{user.dog_age}} years old
+                        </li>
+                        <li>  
+                            And this pup is a {{user.dog_size}} {{user.dog_breed}}
+                        </li>
+                        {% endif %}
                 {% endfor %}
             </ul>
      </li>
