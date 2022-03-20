@@ -50,6 +50,8 @@ def register_user():
     dog_age = request.form.get('dog_age')
     dog_size = request.form.get('dog_size')
     dog_breed = request.form.get('dog_breed')
+    dog_breed = dog_breed.lower()
+   
     
     #Getting user object to check if they are already registered 
     user = crud.get_user_by_email(email)
@@ -113,10 +115,10 @@ def creating_inbox():
     db.session.add(message)
     db.session.commit()
 
-    return redirect("/inbox_")
+    return redirect("/inbox")
 
 
-@app.route('/inbox_')
+@app.route('/inbox')
 def show_all_messages():
     """ Return all messages from a specific user """
 
@@ -136,6 +138,7 @@ def show_all_messages():
     #Sorting the concatenated list by time, so it appears in cronologic time
     sorted_messages_by_date = crud.sort_list_by_date(messages)
 
+
     return render_template('inbox.html', sorted_messages_by_date=sorted_messages_by_date)
 
 @app.route('/main_inbox')
@@ -149,16 +152,18 @@ def main_inbox():
     user = crud.get_user_by_id(user_id)
     
     #gettind ids for the list of names
-    list_of_receivers = []
-    for users in user.messages_sent:
-        if user.user_id == users.sender_id:
-            list_of_receivers.append(users.receiver_id)
-    
-    list_of_senders = []
 
-    for users in user.messages_received:
-        if user.user_id == users.receiver_id:
-            list_of_senders.append(users.sender_id)
+    list_of_receivers = [users.receiver_id for users in user.messages_sent if user.user_id == users.sender_id]
+    # list_of_receivers = []
+    # for users in user.messages_sent:
+    #     if user.user_id == users.sender_id:
+    #         list_of_receivers.append(users.receiver_id)
+    
+    list_of_senders = [users.sender_id for users in user.messages_received if user.user_id == users.receiver_id]
+
+    # for users in user.messages_received:
+    #     if user.user_id == users.receiver_id:
+    #         list_of_senders.append(users.sender_id)
  
     list_of_ids = list_of_receivers + list_of_senders
     list_of_ids = set(list_of_ids)
@@ -169,9 +174,8 @@ def main_inbox():
             user = crud.get_user_by_id(each_id)
             list_of_users_for_inbox.append(user) #appending the user's to the list, with no duplicates 
 
+
     return render_template('main_inbox.html', list_of_users_for_inbox=list_of_users_for_inbox )
-
-
 
 @app.route('/show_inbox')
 def show_inbox():
@@ -193,7 +197,7 @@ def show_inbox():
     return render_template('inbox.html', sorted_messages_by_date=sorted_messages_by_date)
 
 
-@app.route('/profile')
+@app.route("/profile")
 def show_user_profile():
     """ User's profile  page"""
 
@@ -205,6 +209,73 @@ def show_user_profile():
 
     return render_template("profile.html", user=user)
 
+
+@app.route("/search")
+def search():
+    """ Show searching results """
+
+    if "user" in session:
+        user_id = session["user"]
+
+    user = crud.get_user_by_id(user_id)
+    users = crud.show_all_users()
+  
+    #getting info from searching bar:
+    dog_age = request.args.get('dog_age')
+    dog_size = request.args.get('dog_size')
+    dog_breed = request.args.get('dog_breed')
+
+
+    #creating a dictionary with the values from the search
+    results = {}
+    results["dog_age"] = dog_age
+    results["dog_size"] = dog_size
+    results["dog_breed"] = dog_breed
+
+
+    #This list will contain the users with the dogs that "pass" the searching results
+    list_of_searched_dogs = []
+    for user in users:
+        for every_user in user.dogs: #if the user pressed enter without input any value, it will redirect to /all_profiles page
+            if results["dog_size"] == "all_sizes" and results["dog_age"] == "all_ages" and results["dog_breed"] == "":
+                return redirect ("/all_profiles")
+            #if user input something in the searching bar, it will loop to every possible result and add the user in the 
+            #list_of_searched_dogs list, and render_template to /all_profiles
+            #I am converting the every_user.dog_age as a str to compare with the dog_age that will be a str
+            elif str(every_user.dog_age) == dog_age and every_user.dog_size == dog_size and every_user.dog_breed == dog_breed:
+                user = crud.get_user_by_id(every_user.user_id)
+                list_of_searched_dogs.append(user)
+            elif results["dog_age"] == "all_ages" and every_user.dog_size == dog_size and every_user.dog_breed == dog_breed:
+                user = crud.get_user_by_id(every_user.user_id)
+                list_of_searched_dogs.append(user)
+            elif str(every_user.dog_age) == dog_age and results["dog_size"] == "all_sizes" and every_user.dog_breed == dog_breed:
+                user = crud.get_user_by_id(every_user.user_id)
+                list_of_searched_dogs.append(user)
+            elif str(every_user.dog_age) == dog_age and every_user.dog_size == dog_size and results["dog_breed"] == "":
+                user = crud.get_user_by_id(every_user.user_id)
+                list_of_searched_dogs.append(user)
+            elif results["dog_age"] == "all_ages" and results["dog_size"] == "all_sizes" and  every_user.dog_breed == dog_breed:
+                user = crud.get_user_by_id(every_user.user_id)
+                list_of_searched_dogs.append(user)
+            elif results["dog_age"] == "all_ages" and every_user.dog_size == dog_size and results["dog_breed"] == "":
+                user = crud.get_user_by_id(every_user.user_id)
+                list_of_searched_dogs.append(user)
+            elif str(every_user.dog_age) == dog_age and results["dog_size"] == "all_sizes" and results["dog_breed"] == "":
+                user = crud.get_user_by_id(every_user.user_id)
+                list_of_searched_dogs.append(user)
+    
+    return render_template('all_profiles.html', users=list_of_searched_dogs, user_id=user_id, user=user)
+        
+
+
+@app.route("/logout")
+def logout_user():
+    """ Process of logout """
+
+    del session["user"]
+    flash("You are now logout")
+
+    return redirect("/")
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
