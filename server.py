@@ -277,6 +277,20 @@ def search():
     return render_template('all_profiles.html', users=list_of_searched_dogs, user_id=user_id, user=user)
         
 
+@app.route("/delete_account")
+def delete_account():
+    """ Delete user's account """
+
+    if "user" in session:
+        user_id = session["user"]
+
+    user = crud.get_user_by_id(user_id)
+
+    db.session.delete(user)
+    db.session.commit()
+    flash("Your account was deleted!")
+
+    return redirect ("/")
 
 @app.route("/logout")
 def logout_user():
@@ -287,7 +301,7 @@ def logout_user():
 
     return redirect("/")
 
-    
+
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
