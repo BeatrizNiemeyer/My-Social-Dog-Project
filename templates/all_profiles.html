@@ -27,6 +27,7 @@
                     <li>  
                         And this pup is a {{user.dog_size}} {{user.dog_breed}}
                     </li>
+                    <br>
                     {% else %}
                         <li>  
                             {{user.user.fullname}} is the owner of {{user.dog_name}}!
@@ -37,6 +38,7 @@
                         <li>  
                             And this pup is a {{user.dog_size}} {{user.dog_breed}}
                         </li>
+                        <br>
                         {% endif %}
                 {% endfor %}
             </ul>

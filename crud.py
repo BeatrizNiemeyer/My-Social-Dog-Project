@@ -144,6 +144,7 @@ def distance_between_users(coordinate1, coordinate2):
 
     return distance_miles
 
+
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)

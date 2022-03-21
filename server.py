@@ -4,6 +4,7 @@ from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
 from datetime import datetime
+from model import db, User, Dog, Message, connect_to_db
 
 app = Flask(__name__)
 app.secret_key = "key"
@@ -273,9 +274,50 @@ def search():
                     elif every_user.dog_age <= dog_age and results["dog_size"] == "all_sizes" and results["dog_breed"] == "":
                         user = crud.get_user_by_id(every_user.user_id)
                         list_of_searched_dogs.append(user)
+    
+    list_of_searched_dogs = set(list_of_searched_dogs)
         
     return render_template('all_profiles.html', users=list_of_searched_dogs, user_id=user_id, user=user)
         
+@app.route("/update_user")
+def update_user():
+    """ User update profile """
+
+    if "user" in session:
+        user_id = session["user"]
+
+    fullname = request.args.get('fullname')
+    password = request.args.get('password')
+    address = request.args.get('address')
+
+    db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "password":password, "address":address})
+    db.session.commit()
+
+    user = crud.get_user_by_id(user_id)
+
+    return render_template("/profile.html", user=user)
+
+@app.route("/add_dog")
+def add_dog():
+    """ Adding a new dog """
+
+    if "user" in session:
+        user_id = session["user"]
+
+    dog_name = request.args.get('dog_name')
+    dog_age = request.args.get('dog_age')
+    dog_size = request.args.get('dog_size')
+    dog_breed = request.args.get('dog_breed')
+    dog_breed = dog_breed.lower()
+
+    dog = crud.create_dog_profile(user_id, dog_name, dog_age, dog_size, dog_breed)
+    db.session.add(dog) #Adding user's dog to the data base
+    db.session.commit()
+    flash('Your account has been successfully created. You can log in now')
+
+    return redirect("/profile")
+
+
 
 @app.route("/delete_account")
 def delete_account():
@@ -285,6 +327,7 @@ def delete_account():
         user_id = session["user"]
 
     user = crud.get_user_by_id(user_id)
+
 
     db.session.delete(user)
     db.session.commit()

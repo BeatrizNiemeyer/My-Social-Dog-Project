@@ -4,32 +4,101 @@
 {% block body %}
 
 <h1>{{user.fullname}}'s Profile:</h1>
+
+<h3>Your Information</h3>
 <ul>
-<h2>Your Information</h2>
 <li>Name: {{user.fullname}}</li>
 <li>Email:{{user.email}}</li>
 <li>Password: {{user.password}}</li>
 <li>Address: {{user.address}}</li>
 </ul>
 
+
+
+
+<form action="/update_user">
+    <h3>Update your Information</h3>
+    <p>
+        Fullname <input type="text" name="fullname">
+      </p>
+
+      <p>
+        Password <input type="password" name="password" placeholder="password">
+      </p>
+  
+      <p>
+        Address <input type="text" name="address">
+      </p>
+
+    <button type="submit"> Update user </button>
+
+</form>
+<br>
+
+<h3>Your dog Information:</h3>
 <ul>
-<h2>Your dog Information:</h2>
-{% for dog in user.dogs %}
+{% for dog in user.dogs %} 
     <li>Name: {{dog.dog_name}}</li>
     <li> Age: {{dog.dog_age}}</li>
     <li> Size: {{dog.dog_size}}</li>
     <li> Breed: {{dog.dog_breed}}</li>
+    <br>
     {% endfor %}
 </ul>
+
+
+<form action="/add_dog"> 
+    <h3>Add a dog:</h3>
+    <p>
+        Dog name <input type="text" name="dog_name">
+    </p>
+
+    <p>
+        Dog Age (In years)
+         <select name="dog_age">
+              <option value=0>Less than 1</option>
+              <option value=1>1</option>
+              <option value=2>2</option>
+              <option value=3>3</option>
+              <option value=4>4</option>
+              <option value=5>5</option>
+              <option value=6>6</option>
+              <option value=7>7</option>
+              <option value=8>8</option>
+              <option value=9>9</option>
+              <option value=10>10</option>
+              <option value=11>11</option>
+              <option value=12>12</option>
+              <option value=13>13</option>
+              <option value=14>14</option>
+              <option value=15>15</option>
+              <option value=16>More than 15</option>
+          </select> 
+
+    </p>
+
+    <p>
+        Dog Size 
+        <select name="dog_size">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select> 
+    </p>
+
+    <p>
+        Dog Breed <input type="text" name="dog_breed">
+    </p>
+
+    <button type="submit"> Add dog </button>
+
+</form>
+
+<br>
 
 <form action="/delete_account">
 
     <button type="submit"> Delete Account </button>
-
-</form>
-<form action="/all_profiles">
-
-    <button type="submit"> Homepage </button>
 
 </form>
 

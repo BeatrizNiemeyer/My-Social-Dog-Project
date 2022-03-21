@@ -39,6 +39,7 @@ To run this project, install it locally:
 $ git clone https://github.com/BeatrizNiemeyer/My-Social-Dog-Project.git <br>
 $ cd my-social-dog <br>
 $ pip3 install -r requirements.txt <br>
+$ pip install geopy
 
 
 
