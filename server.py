@@ -282,6 +282,7 @@ def update_user():
 
     db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "password":password, "address":address, "longitude":longitude, "latitude":latitude})
     db.session.commit()
+    flash('Your profile was updated!')
 
     user = crud.get_user_by_id(user_id)
 
@@ -303,7 +304,7 @@ def add_dog():
     dog = crud.create_dog_profile(user_id, dog_name, dog_age, dog_size, dog_breed)
     db.session.add(dog) #Adding user's dog to the data base
     db.session.commit()
-    flash('Your account has been successfully created. You can log in now')
+    flash('Your dog was added!')
 
     return redirect("/profile")
 
