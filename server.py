@@ -56,11 +56,13 @@ def register_user():
     
     #Getting user object to check if they are already registered 
     user = crud.get_user_by_email(email)
+    longitude = crud.get_longitude(address)
+    latitude = crud.get_latitude(address)
 
     if user:
         flash('This email has already been used. Try a different email.')
     else:
-        new_user = crud.create_user(fullname, email, password, address) 
+        new_user = crud.create_user(fullname, email, password, address, longitude, latitude) 
         db.session.add(new_user) #Adding the new user to data base
         db.session.commit()
         user = crud.get_user_id_by_email(email)
@@ -140,7 +142,7 @@ def show_all_messages():
     sorted_messages_by_date = crud.sort_list_by_date(messages)
 
 
-    return render_template('inbox.html', sorted_messages_by_date=sorted_messages_by_date)
+    return render_template('inbox.html', sorted_messages_by_date=sorted_messages_by_date, receiver_id=receiver_id)
 
 @app.route('/main_inbox')
 def main_inbox():
@@ -195,7 +197,7 @@ def show_inbox():
     sorted_messages_by_date = crud.inbox_function(user_id, receiver_id)
 
 
-    return render_template('inbox.html', sorted_messages_by_date=sorted_messages_by_date)
+    return render_template('inbox.html', sorted_messages_by_date=sorted_messages_by_date, receiver_id=receiver_id)
 
 
 @app.route("/profile")
@@ -227,6 +229,7 @@ def search():
     dog_breed = request.args.get("dog_breed")
     searched_distance = request.args.get("distance")
     dog_age = int(dog_age)
+    dog_breed = dog_breed.lower()
     searched_distance = int(searched_distance)
 
     #creating a dictionary with the values from the search
@@ -237,47 +240,32 @@ def search():
     results["searched_distance"] = searched_distance
 
     #getting latitude and longitud from user's address
-    user_coordinates = crud.get_coordinates(user.address)
+    user_coordinates = (user.longitude, user.latitude)
    
-    #This list will contain the users with the dogs that "pass" the searching results
-    list_of_searched_dogs = []
+   #joining user and dog and filtering dogs through the searching results
+    dogs = db.session.query(User).join(Dog)
+    if dog_age:
+        dogs = dogs.filter(Dog.dog_age <= dog_age)
+    if dog_size and dog_size != "all_sizes":
+        dogs = dogs.filter(Dog.dog_size == dog_size)
+    if dog_breed:
+        dogs = dogs.filter(Dog.dog_breed == dog_breed)
 
-    #if user press enter without entering any searching feature, it will redirect user to /all_profiles with all the profiles
-    if results["dog_size"] == "all_sizes" and results["dog_age"] == 17 and results["dog_breed"] == "" and results["searched_distance"] == 1000000:
-        return redirect ("/all_profiles")
-    else:    
-        for user in users:
-            #getting latitude and longitud from every user address
-            coordinates = crud.get_coordinates(user.address)
+    #this list contains all the dogs that "passes" search
+    dogs_list = dogs.all()
+    #making sure users are not repeated
+    set_of_searched_dogs = set()
+    if results["searched_distance"] <= 1000000:
+        for user in dogs_list:
+            coordinates = (user.longitude, user.latitude)
             #calculating the distance between user and the other user
             distance = crud.distance_between_users(user_coordinates, coordinates)
+            #if distance between users are appropriate, the user will be appended into the set_of_searched_dogs list
             if distance <= results["searched_distance"]:
-                for every_user in user.dogs:
-                    if every_user.dog_age <= dog_age and every_user.dog_size == dog_size and every_user.dog_breed == dog_breed:
-                        user = crud.get_user_by_id(every_user.user_id)
-                        list_of_searched_dogs.append(user)
-                    elif results["dog_age"] == 17 and every_user.dog_size == dog_size and every_user.dog_breed == dog_breed:
-                        user = crud.get_user_by_id(every_user.user_id)
-                        list_of_searched_dogs.append(user)
-                    elif every_user.dog_age <=dog_age and results["dog_size"] == "all_sizes" and every_user.dog_breed == dog_breed:
-                        user = crud.get_user_by_id(every_user.user_id)
-                        list_of_searched_dogs.append(user)
-                    elif every_user.dog_age <=dog_age and every_user.dog_size == dog_size and results["dog_breed"] == "":
-                        user = crud.get_user_by_id(every_user.user_id)
-                        list_of_searched_dogs.append(user)
-                    elif results["dog_age"] == 17 and results["dog_size"] == "all_sizes" and  every_user.dog_breed == dog_breed:
-                        user = crud.get_user_by_id(every_user.user_id)
-                        list_of_searched_dogs.append(user)
-                    elif results["dog_age"] == 17 and every_user.dog_size == dog_size and results["dog_breed"] == "":
-                        user = crud.get_user_by_id(every_user.user_id)
-                        list_of_searched_dogs.append(user)
-                    elif every_user.dog_age <= dog_age and results["dog_size"] == "all_sizes" and results["dog_breed"] == "":
-                        user = crud.get_user_by_id(every_user.user_id)
-                        list_of_searched_dogs.append(user)
-    
-    list_of_searched_dogs = set(list_of_searched_dogs)
+                set_of_searched_dogs.add(user)
+
         
-    return render_template('all_profiles.html', users=list_of_searched_dogs, user_id=user_id, user=user)
+    return render_template('all_profiles.html', users=set_of_searched_dogs, user_id=user_id, user=user)
         
 @app.route("/update_user")
 def update_user():
@@ -289,8 +277,10 @@ def update_user():
     fullname = request.args.get('fullname')
     password = request.args.get('password')
     address = request.args.get('address')
+    longitude = crud.get_longitude(address)
+    latitude = crud.get_latitude(address)
 
-    db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "password":password, "address":address})
+    db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "password":password, "address":address, "longitude":longitude, "latitude":latitude})
     db.session.commit()
 
     user = crud.get_user_by_id(user_id)

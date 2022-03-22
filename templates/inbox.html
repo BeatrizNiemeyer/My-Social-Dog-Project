@@ -9,13 +9,11 @@
     <li>  
         {{message.sender.fullname}} - {{message.message_body}}
     </li>
-
 {% endfor %}
 </ul>
-
-<form action="/all_profiles">
-     <button type="submit"> Homepage </button>
+<form action="/write_message">
+    <input type="hidden"  name="user_id" value={{receiver_id}}>
+    <button type="submit"> Write a message </button>
 </form>
-
 
 {% endblock %}

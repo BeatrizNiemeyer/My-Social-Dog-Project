@@ -14,6 +14,8 @@ class User(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     password= db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
+    longitude = db.Column(db.Float)
+    latitude = db.Column(db.Float)
 
     dogs = db.relationship("Dog", back_populates="user")
     #messages_sent = db.relationship("Message", backref="sender")

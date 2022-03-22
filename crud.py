@@ -4,10 +4,10 @@ from geopy.distance import geodesic
 
 geolocator = Nominatim(user_agent="geopy.geocoders.options.default_user_agent = 'my-application'")
 
-def create_user(fullname, email, password, address):
+def create_user(fullname, email, password, address, longitude, latitude):
     """Create and return a new user."""
 
-    user = User(fullname=fullname, email=email, password=password, address=address)
+    user = User(fullname=fullname, email=email, password=password, address=address, longitude=longitude, latitude=latitude)
 
     return user
 
@@ -127,14 +127,23 @@ def inbox_function(user_id, receiver_id):
     return sorted_messages_by_date
 
 
-def get_coordinates(address):
+def get_latitude(address):
     """ Get coordinates to calculate distance """
 
 
     user_location = geolocator.geocode(address)
-    user_coordinates = (user_location.latitude, user_location.longitude)
+    user_latitude = user_location.latitude
+  
+    return user_latitude
 
-    return user_coordinates
+def get_longitude(address):
+    """ Get coordinates to calculate distance """
+
+
+    user_location = geolocator.geocode(address)
+    user_longitude = user_location.longitude
+
+    return user_longitude
 
 def distance_between_users(coordinate1, coordinate2):
     """ Calculate distance between users """

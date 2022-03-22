@@ -49,10 +49,9 @@ Project is: _in progress_
 
 
 ## Room for Improvement
-- All the features need improvement, so far just the "skeleton" is ready
+- Mvp is ready! Now I will start workiing on my 2.0:
 
 To do:
-- Allow user to register multiple dogs if needed
 - Implement Ajax feature
 - Use the Place API to allow users search for dog friendly places nearby
 - Css
