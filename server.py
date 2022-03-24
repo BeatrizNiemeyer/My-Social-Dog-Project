@@ -5,10 +5,15 @@ import crud
 from jinja2 import StrictUndefined
 from datetime import datetime
 from model import db, User, Dog, Message, connect_to_db
+import os
+
 
 app = Flask(__name__)
 app.secret_key = "key"
 app.jinja_env.undefined = StrictUndefined
+
+
+API_KEY = os.environ["MAP_API"]
 
 
 
@@ -334,6 +339,11 @@ def logout_user():
     flash("You are now logout")
 
     return redirect("/")
+
+@app.route("/map")
+def see_map():
+
+    return render_template("map.html")
 
 
 
