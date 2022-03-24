@@ -23,7 +23,7 @@ function initMap() {
             // redirect user to basicMap
             const options = {
                 center: location,
-                zoom: 14,
+                zoom: 15,
             }
 
             //basicMap now has the user coordinates!
@@ -32,13 +32,52 @@ function initMap() {
             position: location,
             title: 'Your location',
             map: basicMap,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
             });
 
-            
+            //Autocomplete search
+            autocomplete = new google.maps.places.Autocomplete(document.querySelector('#search'), {
+                componentRestrictions: {'country': ['us']},
+                fields: ['geometry', 'name', 'vicinity'],
+                types: ['establishment']
+            });
+        
+            autocomplete.addListener('place_changed', () =>{
+                const establishment = autocomplete.getPlace();
+                console.log(establishment)
+                const establishmentMarker= new google.maps.Marker({
+                    position: establishment.geometry.location,
+                    title: establishment.name,
+                    map: basicMap,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+                });
+                
+            const establishmentInfoWindow = `
+            <h6>${establishment.name}</h6>
+            <p>
+                Located at: ${establishment.vicinity}
+            </p>`;
+
+            const establishmentInfo = new google.maps.InfoWindow({
+                content: establishmentInfoWindow,
+                maxWidth: 200,
+            });
+
+            establishmentMarker.addListener('click', () => {
+            //Setting a timer of 3 sec to close the window!
+            setTimeout(() => {
+                establishmentInfo.close();
+            }, 3000),
+
+            establishmentInfo.open(basicMap, establishmentMarker);
+            });
+
+            });
+
             //Request will storage the user location, the radius of the search and the type of search! 
             const request = {
                 location: location,
-                radius: '500',
+                radius: '5000',
                 type: ['park']
               };
             
@@ -48,7 +87,7 @@ function initMap() {
             //nearbySearch takes the request data and a callback function (results, status)
             service.nearbySearch(request, (results, status)  => {
            
-            //console.log(results)
+            console.log(results)
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 for (let i = 0; i < results.length; i++) {
                 createMarker(results[i]);
@@ -62,7 +101,29 @@ function initMap() {
                     map: basicMap,
                     position: place.geometry.location,
                     title : place.name,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                 });
+
+                const parkInfoWindow = `
+                <h6>${place.name}</h6>
+                <p>
+                  Located at: ${place.vicinity}
+                </p>`
+                ;
+
+                const parkInfo = new google.maps.InfoWindow({
+                    content: parkInfoWindow,
+                    maxWidth: 200,
+                 });
+
+                marker.addListener('click', () => {
+                    //Setting a timer of 3 sec to close the window!
+                    setTimeout(() => {
+                        parkInfo.close();
+                    }, 3000),
+
+                    parkInfo.open(basicMap, marker);
+                    });
                 }
             },
         )},
@@ -73,5 +134,8 @@ function initMap() {
             // redirect user to basicMap with zoom 2
             const basicMap = new google.maps.Map(document.querySelector('#map'), options); 
         });
+
     };
+
 }
+
