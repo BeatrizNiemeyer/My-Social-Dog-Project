@@ -6,6 +6,7 @@
 <h1>{{user.fullname}}'s Profile:</h1>
 
 <h3>Your Information</h3>
+<img src="{{user.profile_photo}}" width="150" height="150">
 <ul>
 <li>Name: {{user.fullname}}</li>
 <li>Email:{{user.email}}</li>
@@ -13,8 +14,10 @@
 <li>Address: {{user.address}}</li>
 </ul>
 
-
-
+<form action="/upload_picture" method="post" enctype="multipart/form-data">
+    <input type="file" name="dog_picture">
+    <input type="submit">
+</form>
 
 <form action="/update_user">
     <h4>Update your Information</h4>

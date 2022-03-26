@@ -6,6 +6,7 @@ from jinja2 import StrictUndefined
 from datetime import datetime
 from model import db, User, Dog, Message, connect_to_db
 import os
+import cloudinary.uploader
 
 
 app = Flask(__name__)
@@ -14,7 +15,9 @@ app.jinja_env.undefined = StrictUndefined
 
 
 API_KEY = os.environ["MAP_API"]
-
+CLOUDINARY_KEY = os.environ["CLOUDINARY_KEY"]
+CLOUDINARY_SECRET = os.environ["CLOUDINARY_SECRET"]
+CLOUD_NAME = "dxvo8obxj"
 
 
 @app.route("/")
@@ -75,6 +78,9 @@ def register_user():
         db.session.add(dog) #Adding user's dog to the data base
         db.session.commit()
         flash('Your account has been successfully created. You can log in now')
+        profile_photo = "https://images.emojiterra.com/google/android-11/512px/1f436.png"
+        db.session.query(User).filter(User.email == email).update({"profile_photo":profile_photo})
+        db.session.commit()
 
     return redirect('/')
 
@@ -216,6 +222,36 @@ def show_user_profile():
     user = crud.get_user_by_id(user_id)
 
     return render_template("profile.html", user=user)
+
+@app.route("/upload_picture", methods = ['POST'])
+def upload_picture():
+    """ Uploads a dog picture and adds it to database """
+
+    if "user" in session:
+        user_id = session["user"]
+
+    user= crud.get_user_by_id(user_id)
+    users = crud.show_all_users()
+
+    dog_picture = request.files["dog_picture"]
+    result = cloudinary.uploader.upload(dog_picture,
+        api_key=CLOUDINARY_KEY,
+        api_secret=CLOUDINARY_SECRET,
+        cloud_name=CLOUD_NAME)
+    
+    profile_photo = result['secure_url']
+
+    db.session.query(User).filter(User.user_id == user_id).update({"profile_photo":profile_photo})
+    db.session.commit()
+    flash('Your profile was updated!')
+
+    return render_template("all_profiles.html", user=user, user_id=user_id, users=users)
+
+
+
+
+
+
 
 
 @app.route("/search")

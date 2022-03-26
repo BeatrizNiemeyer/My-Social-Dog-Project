@@ -44,7 +44,7 @@ function initMap() {
         
             autocomplete.addListener('place_changed', () =>{
                 const establishment = autocomplete.getPlace();
-                console.log(establishment)
+                basicMap.setCenter(establishment.geometry.location)
                 const establishmentMarker= new google.maps.Marker({
                     position: establishment.geometry.location,
                     title: establishment.name,
@@ -52,32 +52,33 @@ function initMap() {
                     icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
                 });
                 
-            const establishmentInfoWindow = `
-            <h6>${establishment.name}</h6>
-            <p>
-                Located at: ${establishment.vicinity}
-            </p>`;
 
-            const establishmentInfo = new google.maps.InfoWindow({
-                content: establishmentInfoWindow,
-                maxWidth: 200,
-            });
+                const establishmentInfoWindow = `
+                <h6>${establishment.name}</h6>
+                <p>
+                    Located at: ${establishment.vicinity}
+                </p>`;
 
-            establishmentMarker.addListener('click', () => {
-            //Setting a timer of 3 sec to close the window!
-            setTimeout(() => {
-                establishmentInfo.close();
-            }, 3000),
+                const establishmentInfo = new google.maps.InfoWindow({
+                    content: establishmentInfoWindow,
+                    maxWidth: 200,
+                });
 
-            establishmentInfo.open(basicMap, establishmentMarker);
-            });
+                establishmentMarker.addListener('click', () => {
+                //Setting a timer of 3 sec to close the window!
+                setTimeout(() => {
+                    establishmentInfo.close();
+                }, 3000),
+
+                establishmentInfo.open(basicMap, establishmentMarker);
+                });
 
             });
 
             //Request will storage the user location, the radius of the search and the type of search! 
             const request = {
                 location: location,
-                radius: '5000',
+                radius: '5',
                 type: ['park']
               };
             

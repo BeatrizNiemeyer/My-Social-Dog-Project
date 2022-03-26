@@ -14,6 +14,7 @@ class User(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     password= db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
+    profile_photo = db.Column(db.String, nullable=True)
     longitude = db.Column(db.Float)
     latitude = db.Column(db.Float)
 
@@ -36,7 +37,6 @@ class Dog(db.Model):
     dog_age = db.Column(db.Integer, nullable=False)
     dog_size = db.Column(db.String, nullable=False)
     dog_breed = db.Column(db.String, nullable=True)
-    dog_photo = db.Column(db.String, nullable=True)
 
     user = db.relationship("User", back_populates="dogs")
 

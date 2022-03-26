@@ -4,46 +4,49 @@
 {% block body %}
 
 <h3>List of friends: </h3>
-<ul>
     {% for user in users %}
         {% if user.user_id != user_id %}
-     <li>  
-         <h4>{{user.fullname}}
-            <form action="/write_message" >     
-                <input type="hidden"  name="user_id" value={{user.user_id}}>
-                    <button type="submit" >Send Message</button>
-            </form>
-        </h4>
+  
+        <h4>{{user.fullname}}</h4> 
+            <img src="{{user.profile_photo}}" width="150" height="150">
 
-            <ul>
                 {% for user in user.dogs %}
                     {% if 1  > user.dog_age %}
-                    <li>  
-                        {{user.user.fullname}} is the owner of {{user.dog_name}}!
-                    </li>
-                    <li>      
-                        {{user.dog_name}} is less than a year!
-                    </li>
-                    <li>  
-                        And this pup is a {{user.dog_size}} {{user.dog_breed}}
-                    </li>
-                    <br>
-                    {% else %}
-                        <li>  
-                            {{user.user.fullname}} is the owner of {{user.dog_name}}!
-                        </li>
-                        <li>      
-                            {{user.dog_name}} is {{user.dog_age}} years old
-                        </li>
-                        <li>  
-                            And this pup is a {{user.dog_size}} {{user.dog_breed}}
-                        </li>
                         <br>
-                        {% endif %}
-                {% endfor %}
-            </ul>
-     </li>
-{% endif %}
-{% endfor %}
-</ul>
+                        {{user.user.fullname}} is the owner of {{user.dog_name}}!
+                        <br>
+                        {{user.dog_name}} is less than a year!
+                        <br>
+                        And this pup is a {{user.dog_size}} {{user.dog_breed}}
+                        <br>
+
+                    <form action="/write_message" >     
+                        <input type="hidden"  name="user_id" value={{user.user_id}}>
+                            <button type="submit" >Send Message</button>
+                    </form>
+
+                        <br>
+                    {% else %}
+                        <br>
+                            {{user.user.fullname}} is the owner of {{user.dog_name}}!
+                        <br>  
+                            {{user.dog_name}} is {{user.dog_age}} years old
+                        <br>
+                            And this pup is a {{user.dog_size}} {{user.dog_breed}}
+                        <br>
+
+                        <form action="/write_message" >     
+                            <input type="hidden"  name="user_id" value={{user.user_id}}>
+                                <button type="submit" >Send Message</button>
+                        </form>
+
+                        <br>
+
+                    {% endif %}
+
+             {% endfor %}
+
+        {% endif %}
+
+    {% endfor %}
 {% endblock %}
