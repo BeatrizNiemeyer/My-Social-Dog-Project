@@ -1,5 +1,5 @@
 from flask import (Flask, render_template, request, flash, session,
-                   redirect)
+                   redirect, jsonify)
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
@@ -7,7 +7,6 @@ from datetime import datetime
 from model import db, User, Dog, Message, connect_to_db
 import os
 import cloudinary.uploader
-
 
 app = Flask(__name__)
 app.secret_key = "key"
@@ -37,7 +36,7 @@ def login():
     #Get user's password to check if the ented password is correct
     user_password = crud.get_password_by_email(email)
 
-    if user_password == password:
+    if crud.check_hash_password(password, user_password):
         session['user'] = crud.get_user_id_by_email(email)
         flash('Logged in!')
         return redirect('/all_profiles')
@@ -54,6 +53,7 @@ def register_user():
     fullname = request.form.get('fullname')
     email = request.form.get('email')
     password = request.form.get('password')
+    hashed_password = crud.hash_password(password)
     address = request.form.get('address')
     dog_name = request.form.get('dog_name')
     dog_age = request.form.get('dog_age')
@@ -70,7 +70,7 @@ def register_user():
     if user:
         flash('This email has already been used. Try a different email.')
     else:
-        new_user = crud.create_user(fullname, email, password, address, longitude, latitude) 
+        new_user = crud.create_user(fullname, email, hashed_password, address, longitude, latitude) 
         db.session.add(new_user) #Adding the new user to data base
         db.session.commit()
         user = crud.get_user_id_by_email(email)
@@ -248,12 +248,6 @@ def upload_picture():
     return render_template("all_profiles.html", user=user, user_id=user_id, users=users)
 
 
-
-
-
-
-
-
 @app.route("/search")
 def search():
     """ Show searching results """
@@ -316,12 +310,11 @@ def update_user():
         user_id = session["user"]
 
     fullname = request.args.get('fullname')
-    password = request.args.get('password')
     address = request.args.get('address')
     longitude = crud.get_longitude(address)
     latitude = crud.get_latitude(address)
 
-    db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "password":password, "address":address, "longitude":longitude, "latitude":latitude})
+    db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "address":address, "longitude":longitude, "latitude":latitude})
     db.session.commit()
     flash('Your profile was updated!')
 
@@ -378,9 +371,18 @@ def logout_user():
 
 @app.route("/map")
 def see_map():
+    """Display map using user's geolocation"""
 
     return render_template("map.html")
 
+
+@app.route("/dog_fact")
+def dog_fact():
+    """ Returns a random dog fact """
+
+    dog_fact = crud.dog_fact()
+
+    return dog_fact
 
 
 if __name__ == "__main__":

@@ -1,6 +1,9 @@
 from model import db, User, Dog, Message, connect_to_db
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
+import random
+import hashlib
+
 
 geolocator = Nominatim(user_agent="geopy.geocoders.options.default_user_agent = 'my-application'")
 
@@ -153,6 +156,52 @@ def distance_between_users(coordinate1, coordinate2):
 
     return distance_miles
 
+
+def dog_fact():
+    """Retuns a random dog fact """
+
+    dog_facts =[ 
+        "Did you know that... A dog's nose print is unique, much like a person's fingerprint!",
+        "Did you know that... Forty-five percent of U.S. dogs sleep in their owner's bed!",
+        "Did you know that... All dogs dream, but puppies and senior dogs dream more frequently than adult dogs!",
+        "Did you know that... Seventy percent of people sign their dog's name on their holiday cards!",
+        "Did you know that... Dogs have a great sense of smell! Their nose have as many as 300 million receptors. In comparison, a human nose has about 5 million!",
+        "Did you know that... Dogs' noses can sense heat/thermal radiation, which explains why blind or deaf dogs can still hunt!",
+        "Did you know that... Dogs curl up in a ball when sleeping to protect their organs—a hold over from their days in the wild, when they were vulnerable to predator attacks!",
+        "Did you know that... Yawning is contagious—even for dogs. Research shows that the sound of a human yawn can trigger one from your dog!",
+        "Did you know that... Human blood pressure goes down when petting a dog. And so does the dog's!",
+        "Did you know that... Dogs are not colorblind. They can see blue and yellow!",
+        "Did you know that... The Australian Shepherd is not actually from Australia—they are an American breed!",
+        "Did you know that... All puppies are born deaf!",
+        "Did you know that... Dalmatians are born completely white, and develop their spots as they get older!",
+        "Did you know that... Dogs have about 1,700 taste buds. We humans have between 2,000 - 10,000!",
+        "Did you know that... When dogs kick backward after they go to the bathroom it's not to cover it up, but to mark their territory, using the scent glands in their feet!",
+        "Did you know that... A recent study shows that dogs are among a small group of animals who show voluntary unselfish kindness towards others without any reward!",
+        "Did you know that... Your dog could be left or right-pawed!",
+        "Did you know that... Dogs have 18 muscles controlling their ears!",
+        "Did you know that... Dogs are about as intelligent as a two-year-old!",
+        "Did you know that... Dogs noses are wet to help absorb scent chemicals!",
+        "Did you know that... Three dogs survived the Titanic sinking!",
+        "Did you know that... A Greyhound could beat a Cheetah in a long distance race!",
+        "Did you know that... Dog socialization reduces fear and anxiety!",
+        "Did you know that... Dog socialization improves intelligence and behavior!",
+    ]
+
+    return random.choice(dog_facts)
+
+def hash_password(password):
+    """ Converts password to hash """
+
+    return hashlib.sha256(str.encode(password)).hexdigest()
+
+    
+def check_hash_password(password, hash):
+    """Checks if password input matches hashed password """
+
+    if hash_password(password) == hash:
+        return True
+        
+    return False
 
 if __name__ == '__main__':
     from server import app

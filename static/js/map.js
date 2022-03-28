@@ -78,7 +78,7 @@ function initMap() {
             //Request will storage the user location, the radius of the search and the type of search! 
             const request = {
                 location: location,
-                radius: '5',
+                radius: '5000',
                 type: ['park']
               };
             

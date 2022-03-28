@@ -2,7 +2,8 @@
 {% block title %}Dog Profiles{% endblock %}
 
 {% block body %}
-
+<i><div id="dog-fact"  class="center">Welcome to MySocialDog!</div></i>
+<br>
 <h3>List of friends: </h3>
     {% for user in users %}
         {% if user.user_id != user_id %}
@@ -20,12 +21,6 @@
                         And this pup is a {{user.dog_size}} {{user.dog_breed}}
                         <br>
 
-                    <form action="/write_message" >     
-                        <input type="hidden"  name="user_id" value={{user.user_id}}>
-                            <button type="submit" >Send Message</button>
-                    </form>
-
-                        <br>
                     {% else %}
                         <br>
                             {{user.user.fullname}} is the owner of {{user.dog_name}}!
@@ -35,18 +30,17 @@
                             And this pup is a {{user.dog_size}} {{user.dog_breed}}
                         <br>
 
-                        <form action="/write_message" >     
-                            <input type="hidden"  name="user_id" value={{user.user_id}}>
-                                <button type="submit" >Send Message</button>
-                        </form>
-
-                        <br>
-
                     {% endif %}
 
              {% endfor %}
 
+            <form action="/write_message" >     
+            <input type="hidden"  name="user_id" value={{user.user_id}}>
+                <button type="submit" >Send Message</button>
+            </form>
+            <br>
         {% endif %}
-
     {% endfor %}
+    <script src="/static/js/dogFact.js"></script>
+    
 {% endblock %}
