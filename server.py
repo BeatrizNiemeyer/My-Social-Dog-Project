@@ -60,7 +60,11 @@ def register_user():
     dog_size = request.form.get('dog_size')
     dog_breed = request.form.get('dog_breed')
     dog_breed = dog_breed.lower()
-   
+    print("********************************")
+    print(dog_name)
+    print(dog_age)
+    print(dog_size)
+    print(dog_breed)
     
     #Getting user object to check if they are already registered 
     user = crud.get_user_by_email(email)
@@ -69,18 +73,28 @@ def register_user():
 
     if user:
         flash('This email has already been used. Try a different email.')
-    else:
+    elif fullname and email and password and address and dog_name and dog_age and dog_size and dog_breed:
         new_user = crud.create_user(fullname, email, hashed_password, address, longitude, latitude) 
         db.session.add(new_user) #Adding the new user to data base
+        db.session.commit()
+        profile_photo = "https://images.emojiterra.com/google/android-11/512px/1f436.png"
+        db.session.query(User).filter(User.email == email).update({"profile_photo":profile_photo})
         db.session.commit()
         user = crud.get_user_id_by_email(email)
         dog = crud.create_dog_profile(user, dog_name, dog_age, dog_size, dog_breed)
         db.session.add(dog) #Adding user's dog to the data base
         db.session.commit()
         flash('Your account has been successfully created. You can log in now')
+    elif fullname and email and password and address:
+        new_user = crud.create_user(fullname, email, hashed_password, address, longitude, latitude) 
+        db.session.add(new_user) #Adding the new user to data base
+        db.session.commit()
+        flash('Your account has been successfully created. You can log in now')
         profile_photo = "https://images.emojiterra.com/google/android-11/512px/1f436.png"
         db.session.query(User).filter(User.email == email).update({"profile_photo":profile_photo})
         db.session.commit()
+    else:
+       flash("Missing Information!")
 
     return redirect('/')
 
@@ -322,7 +336,7 @@ def update_user():
 
     return render_template("/profile.html", user=user)
 
-@app.route("/add_dog")
+@app.route("/add_dog.json")
 def add_dog():
     """ Adding a new dog """
 
@@ -334,15 +348,19 @@ def add_dog():
     dog_size = request.args.get('dog_size')
     dog_breed = request.args.get('dog_breed')
     dog_breed = dog_breed.lower()
+    print("********************************")
+    print(dog_name)
+    print(dog_age)
+    print(dog_size)
+    print(dog_breed)
 
     dog = crud.create_dog_profile(user_id, dog_name, dog_age, dog_size, dog_breed)
     db.session.add(dog) #Adding user's dog to the data base
     db.session.commit()
     flash('Your dog was added!')
 
-    return redirect("/profile")
-
-
+    return jsonify({"dog_name": dog_name, "dog_age": dog_age, "dog_size": dog_size, "dog_breed":dog_breed })
+  
 
 @app.route("/delete_account")
 def delete_account():

@@ -51,18 +51,20 @@
         <br>
     {% endif %}
 {% endfor %}
+<div id="added-dog"> </div>
 </ul>
 
 
-<form action="/add_dog"> 
+
+<form id="add-dog-form"> 
     <h4>Add a dog:</h4>
     <p>
-        Dog name <input type="text" name="dog_name">
+        Dog name <input id="dog-name" type="text" name="dog_name">
     </p>
 
     <p>
         Dog Age (In years)
-         <select name="dog_age">
+         <select id="dog-age" name="dog_age">
               <option value=0>Less than 1</option>
               <option value=1>1</option>
               <option value=2>2</option>
@@ -86,7 +88,7 @@
 
     <p>
         Dog Size 
-        <select name="dog_size">
+        <select id="dog-size" name="dog_size">
             <option value="small">Small</option>
             <option value="medium">Medium</option>
             <option value="large">Large</option>
@@ -94,14 +96,13 @@
     </p>
 
     <p>
-        Dog Breed <input type="text" name="dog_breed">
+        Dog Breed <input id="dog-breed" type="text" name="dog_breed">
     </p>
 
-    <button type="submit"> Add dog </button>
+    <button  type="submit"> Add dog </button>
 
 </form>
 
-<br>
 
 <form action="/delete_account">
 
@@ -109,4 +110,5 @@
 
 </form>
 
+<script src="/static/js/addDog.js"></script>
 {% endblock %}

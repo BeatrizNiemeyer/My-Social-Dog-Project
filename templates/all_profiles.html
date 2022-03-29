@@ -6,12 +6,20 @@
 <br>
 <h3>List of friends: </h3>
     {% for user in users %}
-        {% if user.user_id != user_id %}
+        {% if user.user_id != user_id  %}
   
         <h4>{{user.fullname}}</h4> 
             <img src="{{user.profile_photo}}" width="150" height="150">
+                
+            {% if not user.dogs %}
+                <br>
+                {{user.fullname}} doesn't have dogs yet!
+                <br>
+                {% endif %}
+                
 
                 {% for user in user.dogs %}
+                        
                     {% if 1  > user.dog_age %}
                         <br>
                         {{user.user.fullname}} is the owner of {{user.dog_name}}!
@@ -31,15 +39,17 @@
                         <br>
 
                     {% endif %}
+                   
 
              {% endfor %}
-
+            <br>
             <form action="/write_message" >     
             <input type="hidden"  name="user_id" value={{user.user_id}}>
                 <button type="submit" >Send Message</button>
             </form>
             <br>
         {% endif %}
+
     {% endfor %}
     <script src="/static/js/dogFact.js"></script>
     
