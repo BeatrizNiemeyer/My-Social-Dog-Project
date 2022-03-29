@@ -20,16 +20,29 @@
 
 
 ## Technologies Used
-- Python - version 3.8.10
+- Python
+- Javascript
+- Flask
+- Ajax
+- Jinja
+- SQL
+- Postgresql
+- Sqlalchemy
+- Google Maps API (Maps JavaScript API, Geolocation API, Places API)
+- Cloudinary API
 
 
 
 ## Features
-So far, the ready features here:
+So far, the ready features are:
 - Login and registration page
 - Page with profiles
 - Inbox
-- Searching feature
+- Searching feature (distance, age, size, breed)
+- Map with user location and parks around displayed
+- Google Maps Autocomplete search
+- Edit profile
+- Add multiple dogs
 
 
 
@@ -39,7 +52,7 @@ To run this project, install it locally:
 $ git clone https://github.com/BeatrizNiemeyer/My-Social-Dog-Project.git <br>
 $ cd my-social-dog <br>
 $ pip3 install -r requirements.txt <br>
-$ pip install geopy
+
 
 
 
@@ -49,14 +62,15 @@ Project is: _in progress_
 
 
 ## Room for Improvement
-- Mvp is ready! Now I will start workiing on my 2.0:
+- Mvp is ready! Now I will start working on my 2.0:
 
 To do:
-- Implement Ajax feature
-- Use the Place API to allow users search for dog friendly places nearby
+
 - Css
 
 ## Acknowledgements
 - Many thanks to my adviser Steve Chait and my mentor Tim Pile for helping me build this project!
+
+
 
 

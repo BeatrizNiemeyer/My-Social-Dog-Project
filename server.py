@@ -325,16 +325,27 @@ def update_user():
 
     fullname = request.args.get('fullname')
     address = request.args.get('address')
-    longitude = crud.get_longitude(address)
-    latitude = crud.get_latitude(address)
+    if fullname and address:
+        longitude = crud.get_longitude(address)
+        latitude = crud.get_latitude(address)
+        db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "address":address, "longitude":longitude, "latitude":latitude})
+        db.session.commit()
+        flash('Your profile was updated!')
+    elif fullname:
+        db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname})
+        db.session.commit()
+        flash('Your profile was updated!')
+    elif address:
+        longitude = crud.get_longitude(address)
+        latitude = crud.get_latitude(address)
+        db.session.query(User).filter(User.user_id == user_id).update({"address":address, "longitude":longitude, "latitude":latitude})
+        db.session.commit()
+        flash('Your profile was updated!')
+    else:
+        flash('Missing data!')
 
-    db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "address":address, "longitude":longitude, "latitude":latitude})
-    db.session.commit()
-    flash('Your profile was updated!')
 
-    user = crud.get_user_by_id(user_id)
-
-    return render_template("/profile.html", user=user)
+    return redirect("/profile")
 
 @app.route("/add_dog.json")
 def add_dog():
@@ -357,7 +368,6 @@ def add_dog():
     dog = crud.create_dog_profile(user_id, dog_name, dog_age, dog_size, dog_breed)
     db.session.add(dog) #Adding user's dog to the data base
     db.session.commit()
-    flash('Your dog was added!')
 
     return jsonify({"dog_name": dog_name, "dog_age": dog_age, "dog_size": dog_size, "dog_breed":dog_breed })
   
