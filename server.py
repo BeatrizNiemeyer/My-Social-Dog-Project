@@ -412,6 +412,12 @@ def dog_fact():
 
     return dog_fact
 
+@app.route("/calendar")
+def see_calendar():
+    """Display calendar"""
+
+    return render_template("calendar.html")
+
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
