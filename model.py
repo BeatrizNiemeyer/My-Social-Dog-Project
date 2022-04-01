@@ -19,6 +19,7 @@ class User(db.Model):
     latitude = db.Column(db.Float)
 
     dogs = db.relationship("Dog", back_populates="user")
+    events = db.relationship("Event", back_populates="user")
     #messages_sent = db.relationship("Message", backref="sender")
     #messages_received = db.relationship("Message", backref="receiver")
 
@@ -53,7 +54,7 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     receiver_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     message_body = db.Column(db.String, nullable=False)
-    message_date = db.Column(db.DateTime) 
+    message_date = db.Column(db.Time) 
 
     sender = db.relationship("User", backref="messages_sent", foreign_keys="Message.sender_id")
     receiver = db.relationship("User", backref="messages_received", foreign_keys="Message.receiver_id")
@@ -61,8 +62,23 @@ class Message(db.Model):
     # def __repr__(self):
     #     return f"<Message message_id={self.message_id} sender_id={self.sender_id} receiver_id={self.receiver_id}>"
 
+class Event(db.Model):
+    """ Message information """
 
-def connect_to_db(flask_app, db_uri="postgresql:///msd_data", echo=True):
+    __tablename__ = "events"
+
+    event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    event_body = db.Column(db.String, nullable=False)
+    event_date = db.Column(db.DateTime, nullable=False)
+    event_date_str = db.Column(db.String, nullable=False)
+    event_time = db.Column(db.Time, nullable=False)
+
+    user = db.relationship("User", back_populates="events")
+
+
+
+def connect_to_db(flask_app, db_uri="postgresql:///msd_data", echo=False):
     """Conecting to db"""
     
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

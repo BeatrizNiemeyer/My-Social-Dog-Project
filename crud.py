@@ -1,4 +1,4 @@
-from model import db, User, Dog, Message, connect_to_db
+from model import db, User, Dog, Message, Event, connect_to_db
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 import random
@@ -202,6 +202,26 @@ def check_hash_password(password, hash):
         return True
         
     return False
+
+def create_event(user_id, event_body, event_date, event_date_str, event_time):
+    """Create and return a new user."""
+
+    event = Event(user_id=user_id, event_body=event_body, event_date=event_date, event_date_str=event_date_str, event_time=event_time)
+
+    return event
+
+def get_event_by_id(user_id):
+    """Get events by user's id"""
+
+    events = Event.query.filter(User.user_id==user_id).all()
+
+    return events
+  
+def sort_list_by_time(list_of_times):
+    """ sort list by time """
+    sorted_time = sorted(list_of_times, key=lambda every_item: every_item[2])
+
+    return sorted_time
 
 if __name__ == '__main__':
     from server import app

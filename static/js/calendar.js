@@ -1,3 +1,27 @@
+function gettingEventData(dayString, daySquare) {
+    fetch("/get_event")
+        .then(response => response.json())
+        .then(responseJSON =>{
+            for (const [key, value] of Object.entries(responseJSON)) {
+                console.log(responseJSON[key][0]);
+                console.log(dayString);
+
+                if (responseJSON[key][0] === dayString){
+                    daySquare.classList.add('eventDay');
+                }
+            // console.log(responseJSON[key][0]) //if date is equal to that
+            // console.log(responseJSON[key][1]) // this is the event
+            // console.log(responseJSON[key][2]) // this is date and tim
+        }})
+
+}
+
+
+
+
+
+
+
 
 let nav = 0; //each month we are looking at, if is 0, it means today's month!
 const calendar = document.querySelector('#calendar'); //selecting div calendar
@@ -41,9 +65,31 @@ function load() {
         const daySquare = document.createElement('div');
         daySquare.classList.add('day');
 
+        const dayString = `${month + 1}/${i - paddingDays}/${year}`
+
 
         if (i > paddingDays) {
             daySquare.innerText = i - paddingDays;
+            gettingEventData(dayString, daySquare)
+
+            daySquare.addEventListener('click', ()=> {
+                document.querySelector('#show-events').innerHTML = ""
+                document.querySelector('#eventDay').innerHTML = ""
+                fetch("/get_event")
+                    .then(response => response.json())
+                    .then(responseJSON =>{
+                        for (const [key, value] of Object.entries(responseJSON)) {
+                            if (responseJSON[key][0] === dayString){
+                                document.querySelector('#eventDay').innerHTML = ` Date: ${dayString}`
+                                document.querySelector('#show-events').insertAdjacentHTML('beforeend', `<br><div> Event: ${responseJSON[key][1]}</div>
+                                                                                                            ` )
+                            };
+                        // console.log(responseJSON[key][0]) //if date is equal to that
+                        // console.log(responseJSON[key][1]) // this is the event
+                        // console.log(responseJSON[key][2]) // this is date and tim
+                    }});
+            
+            })
 
         } else {
             daySquare.classList.add('padding');
@@ -60,14 +106,18 @@ function load() {
 function initButtons(){
     document.querySelector('#nextButton').addEventListener('click', () => {
         nav+=1; //incrementing nav (next month)
+        document.querySelector('#show-events').innerHTML = ""
+        document.querySelector('#eventDay').innerHTML = ""
         load(); //load our calendar
     });
     document.querySelector('#backButton').addEventListener('click', () => {
         nav-=1; //decreasing nav (previous month)
+        document.querySelector('#show-events').innerHTML = ""
+        document.querySelector('#eventDay').innerHTML = ""
         load(); //load our calendar
     });
 }
 
 initButtons();
 load();
-
+gettingEventData();

@@ -6,6 +6,7 @@ body {
   }
   button {
     width: 75px;
+    height: 40px;
     cursor: pointer;
     box-shadow: 0px 0px 2px gray;
     border: none;
@@ -28,6 +29,7 @@ body {
   }
   #container {
     width: 770px;
+    margin-top: 100px;
   }
   #weekdays {
     width: 100%;
@@ -35,7 +37,7 @@ body {
     color: #247BA0;
   }
   #weekdays div {
-    width: 100px;
+    width: 110px;
     padding: 10px;
   }
   #calendar {
@@ -59,7 +61,7 @@ body {
 
   
   .day + #currentDay {
-    background-color:#77c6ee;
+    background-color:#e8f4fa;
   }
   .event {
     font-size: 10px;
@@ -121,4 +123,6 @@ body {
     background-color: rgba(0,0,0,0.8);
   }
 
-  
+  .eventDay {
+    background-color:#2b8ab9;
+  }
