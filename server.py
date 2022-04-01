@@ -427,27 +427,12 @@ def create_event():
 
     event_body = request.form.get('event_name') 
     date_for_event = request.form.get('event_date') #string
-    time_for_event = request.form.get('event_time') #string and then convert to datetime
-    event_time = datetime.strptime(time_for_event, '%I:%M%p') #time in datetime
+    event_time_str = request.form.get('event_time') #string and then convert to datetime
+    event_time = datetime.strptime(event_time_str, '%I:%M%p') #time in datetime
 
-    event_date = datetime.strptime(date_for_event, '%m/%d/%Y') #03/31/2022 in datetime
-    print(event_date)
-    # time_for_event = request.form.get('event_time')
-    print("************************")
-    print("************************")
-    print("************************")
-
-    print(event_time)
-    # # time_for_event = request.form.get('event_date')
-
-    # event_time = datetime.strptime(time_for_event, '%I:%M%p').time() #1:33PM
-    # print(type(event_time))
-
-
-    event = crud.create_event(user_id, event_body, event_date, date_for_event, event_time)
+    event = crud.create_event(user_id, event_body, date_for_event, event_time,  event_time_str)
     db.session.add(event)
     db.session.commit()
-    flash('Your event was created!')
 
     return redirect('/calendar')
 
@@ -463,40 +448,17 @@ def get_user_events():
     events = crud.get_event_by_id(user_id)
     print(events)
 
-
+    sorted_events = crud.sort_list_by_time(events)
     
     dict_events ={}
-    list_events = []
 
-    for event in events:
-        dict_events[event.event_id] = []
-        dict_events[event.event_id].append(event.event_date_str)
-        dict_events[event.event_id].append(event.event_body)
-        dict_events[event.event_id].append(event.event_date)
-        dict_events[event.event_id].append(event.event_time)
-        
-        
-    
-    # for key, value in sorted(dict_events.items(), key=lambda item: item[3])
-    dict(sorted(dict_events.items(), key=lambda item: item[3]))
-    
 
-        
-    #     result = [dict_date[revent.event_date] (event.event_body),
-    #     dict_date[revent.event_date] = event.event_date_st]x
-
-    # dict_events['event'] = list_events
-
-    
-        
-    
-    print("************************")
-    print(dict_events)
-    print("************************")
-    print("************************")
-    print("************************")
-    print("************************")
-
+    for event in sorted_events:
+        str_event_id = "k_" + str(event.event_id)
+        dict_events[str_event_id] = []
+        dict_events[str_event_id].append(event.event_date_str)
+        dict_events[str_event_id].append(event.event_body)
+        dict_events[str_event_id].append(event.event_time_str)
 
     return jsonify(dict_events)
 

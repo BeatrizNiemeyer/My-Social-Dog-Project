@@ -2,12 +2,14 @@ function gettingEventData(dayString, daySquare) {
     fetch("/get_event")
         .then(response => response.json())
         .then(responseJSON =>{
+            console.log(responseJSON)
             for (const [key, value] of Object.entries(responseJSON)) {
                 console.log(responseJSON[key][0]);
                 console.log(dayString);
 
                 if (responseJSON[key][0] === dayString){
                     daySquare.classList.add('eventDay');
+                    
                 }
             // console.log(responseJSON[key][0]) //if date is equal to that
             // console.log(responseJSON[key][1]) // this is the event
@@ -16,11 +18,20 @@ function gettingEventData(dayString, daySquare) {
 
 }
 
-
-
-
-
-
+function gettingTodayData(dayString) {
+    fetch("/get_event")
+        .then(response => response.json())
+        .then(responseJSON =>{
+            console.log(responseJSON)
+            for (const [key, value] of Object.entries(responseJSON)) {
+                if (responseJSON[key][0] === dayString){
+                    document.querySelector('#eventDay').innerHTML = `<di> Date: ${dayString}</div>`
+                    document.querySelector('#show-events').insertAdjacentHTML('beforeend', `<br><div> Event: ${responseJSON[key][1]}</div>
+                                                                                          <div> Time: ${responseJSON[key][2]}</div>` )
+                };
+            }; 
+        })
+        };
 
 
 let nav = 0; //each month we are looking at, if is 0, it means today's month!
@@ -79,14 +90,12 @@ function load() {
                     .then(response => response.json())
                     .then(responseJSON =>{
                         for (const [key, value] of Object.entries(responseJSON)) {
+
                             if (responseJSON[key][0] === dayString){
-                                document.querySelector('#eventDay').innerHTML = ` Date: ${dayString}`
+                                document.querySelector('#eventDay').innerHTML = `<di> Date: ${dayString}</div>`
                                 document.querySelector('#show-events').insertAdjacentHTML('beforeend', `<br><div> Event: ${responseJSON[key][1]}</div>
-                                                                                                            ` )
+                                                                                                        <div> Time: ${responseJSON[key][2]}</div>` )
                             };
-                        // console.log(responseJSON[key][0]) //if date is equal to that
-                        // console.log(responseJSON[key][1]) // this is the event
-                        // console.log(responseJSON[key][2]) // this is date and tim
                     }});
             
             })
@@ -96,7 +105,10 @@ function load() {
         }
 
         if (i - paddingDays === day && nav === 0){
-            daySquare.id = 'currentDay'
+            daySquare.id = 'currentDay';
+            gettingTodayData(dayString); 
+          
+            
         }
     
     calendar.appendChild(daySquare);

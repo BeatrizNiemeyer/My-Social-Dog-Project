@@ -203,10 +203,10 @@ def check_hash_password(password, hash):
         
     return False
 
-def create_event(user_id, event_body, event_date, event_date_str, event_time):
+def create_event(user_id, event_body, event_date_str, event_time,  event_time_str):
     """Create and return a new user."""
 
-    event = Event(user_id=user_id, event_body=event_body, event_date=event_date, event_date_str=event_date_str, event_time=event_time)
+    event = Event(user_id=user_id, event_body=event_body, event_date_str=event_date_str, event_time=event_time,  event_time_str=event_time_str)
 
     return event
 
@@ -219,7 +219,7 @@ def get_event_by_id(user_id):
   
 def sort_list_by_time(list_of_times):
     """ sort list by time """
-    sorted_time = sorted(list_of_times, key=lambda every_item: every_item[2])
+    sorted_time = sorted(list_of_times, key=lambda every_item: every_item.event_time)
 
     return sorted_time
 

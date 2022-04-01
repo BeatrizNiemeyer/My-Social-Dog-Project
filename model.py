@@ -70,9 +70,9 @@ class Event(db.Model):
     event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     event_body = db.Column(db.String, nullable=False)
-    event_date = db.Column(db.DateTime, nullable=False)
     event_date_str = db.Column(db.String, nullable=False)
     event_time = db.Column(db.Time, nullable=False)
+    event_time_str = db.Column(db.String, nullable=False)
 
     user = db.relationship("User", back_populates="events")
 
