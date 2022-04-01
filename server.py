@@ -473,11 +473,12 @@ def get_user_events():
         dict_events[event.event_id].append(event.event_date_str)
         dict_events[event.event_id].append(event.event_body)
         dict_events[event.event_id].append(event.event_date)
-        # dict_events[event.event_id].append(str(event.event_time))
+        dict_events[event.event_id].append(event.event_time)
         
         
     
-
+    # for key, value in sorted(dict_events.items(), key=lambda item: item[3])
+    dict(sorted(dict_events.items(), key=lambda item: item[3]))
     
 
         
