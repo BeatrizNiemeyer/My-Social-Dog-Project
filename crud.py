@@ -213,7 +213,7 @@ def create_event(user_id, event_body, event_date_str, event_time,  event_time_st
 def get_event_by_id(user_id):
     """Get events by user's id"""
 
-    events = Event.query.filter(User.user_id==user_id).all()
+    events = Event.query.filter_by(user_id=user_id)
 
     return events
   
@@ -222,6 +222,16 @@ def sort_list_by_time(list_of_times):
     sorted_time = sorted(list_of_times, key=lambda every_item: every_item.event_time)
 
     return sorted_time
+
+def get_event(event_id):
+    """Get events by user's id"""
+
+    events = Event.query.filter_by(event_id=event_id).first()
+    
+
+    return events
+
+
 
 if __name__ == '__main__':
     from server import app

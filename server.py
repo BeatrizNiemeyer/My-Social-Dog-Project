@@ -259,7 +259,7 @@ def upload_picture():
     db.session.commit()
     flash('Your profile was updated!')
 
-    return render_template("all_profiles.html", user=user, user_id=user_id, users=users)
+    return redirect("/profile")
 
 
 @app.route("/search")
@@ -428,9 +428,27 @@ def create_event():
     event_body = request.form.get('event_name') 
     date_for_event = request.form.get('event_date') #string
     event_time_str = request.form.get('event_time') #string and then convert to datetime
-    event_time = datetime.strptime(event_time_str, '%I:%M%p') #time in datetime
+    event_time = datetime.strptime(event_time_str, '%H:%M') #time in datetime
 
-    event = crud.create_event(user_id, event_body, date_for_event, event_time,  event_time_str)
+    correct_date = date_for_event.split("-")
+    year = correct_date[0] #>> ['2022', '09', '09']
+    month = correct_date[1]
+    day = correct_date[2]
+
+    if int(month) < 10:
+        month = month[1:2]
+
+    if int(day) < 10:
+        day = day[1:2]
+
+    event_date = month + "/" + day + "/" + year
+
+    if int(event_time_str[:2]) <= 12:
+        time = event_time_str + "AM"
+    else:
+        time = str(int(event_time_str[:2]) - 12) + event_time_str[2:] + "PM"
+
+    event = crud.create_event(user_id, event_body, event_date, event_time, time )
     db.session.add(event)
     db.session.commit()
 
@@ -444,23 +462,38 @@ def get_user_events():
     if "user" in session:
         user_id = session["user"]
 
-    print("************************")
+    print(user_id)
+
+
     events = crud.get_event_by_id(user_id)
-    print(events)
 
     sorted_events = crud.sort_list_by_time(events)
     
-    dict_events ={}
-
+    list_events = []
 
     for event in sorted_events:
-        str_event_id = "k_" + str(event.event_id)
-        dict_events[str_event_id] = []
-        dict_events[str_event_id].append(event.event_date_str)
-        dict_events[str_event_id].append(event.event_body)
-        dict_events[str_event_id].append(event.event_time_str)
+        event_dict = {"id": str(event.event_id), "date": event.event_date_str, "body":event.event_body, "time": event.event_time_str}
+        list_events.append(event_dict)
 
-    return jsonify(dict_events)
+    return jsonify(list_events)
+
+
+@app.route("/delete_event")
+def delete_event():
+    """delete an event"""
+
+    event_id = request.args.get("event_id")
+    print("*******************************")
+    print(event_id)
+
+    event = crud.get_event(event_id)
+    print("This is the vent", event)
+
+    db.session.delete(event)
+    db.session.commit()
+    flash("Your event was deleted!")
+
+    return redirect ("/calendar")
 
 
 if __name__ == "__main__":

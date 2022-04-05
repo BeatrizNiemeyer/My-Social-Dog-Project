@@ -1,37 +1,36 @@
-function gettingEventData(dayString, daySquare) {
-    fetch("/get_event")
-        .then(response => response.json())
-        .then(responseJSON =>{
-            console.log(responseJSON)
-            for (const [key, value] of Object.entries(responseJSON)) {
-                console.log(responseJSON[key][0]);
-                console.log(dayString);
-
-                if (responseJSON[key][0] === dayString){
-                    daySquare.classList.add('eventDay');
-                    
-                }
-            // console.log(responseJSON[key][0]) //if date is equal to that
-            // console.log(responseJSON[key][1]) // this is the event
-            // console.log(responseJSON[key][2]) // this is date and tim
-        }})
-
+//Function to add events in the day div (when clicking the day and today's day)
+function gettingTodayData (url, dayString) { 
+    const data = fetch(url)
+                .then(response => response.json())
+                .then(responseJSON => {
+                responseJSON.map((d) => {
+                console.log(d)
+                if (d.date === dayString){
+                document.querySelector('#eventDay').innerHTML = `<div> Date: ${dayString}</div>`
+                        document.querySelector('#show-events').insertAdjacentHTML('beforeend', `<br><div> Event: ${d.body}</div>
+                                                                                              <div> Time: ${d.time}</div>
+                                                                                              <form action="/delete_event">
+                                                                                              <input type="hidden"  name="event_id" value=${d.id}>
+                                                                                              <button id="${d.id}">Delete</button><br></form>` )
+                }})
+             }) 
 }
 
-function gettingTodayData(dayString) {
-    fetch("/get_event")
-        .then(response => response.json())
-        .then(responseJSON =>{
-            console.log(responseJSON)
-            for (const [key, value] of Object.entries(responseJSON)) {
-                if (responseJSON[key][0] === dayString){
-                    document.querySelector('#eventDay').innerHTML = `<di> Date: ${dayString}</div>`
-                    document.querySelector('#show-events').insertAdjacentHTML('beforeend', `<br><div> Event: ${responseJSON[key][1]}</div>
-                                                                                          <div> Time: ${responseJSON[key][2]}</div>` )
-                };
-            }; 
-        })
-        };
+//Function to add color pink to event days
+function gettingEventData(url, dayString, daySquare) {
+
+    fetch(url)
+    .then(response => response.json())
+    .then(responseJSON =>  {
+    responseJSON.map((d) => {
+    console.log(d)
+    if (d.date === dayString){
+        daySquare.classList.add('eventDay');                
+        }
+    })}
+    )}
+
+
 
 
 let nav = 0; //each month we are looking at, if is 0, it means today's month!
@@ -51,7 +50,7 @@ function load() {
     const month = dt.getMonth(); //numeric representation of today's month. january is 0, so march is 2
     const year = dt.getFullYear(); //numeric representation of today's year,
 
-    const firstDayOfMonth = new Date(year, month, 1) // it will print the first day of that nav month. In today's case - Tue Mar 01 2022
+    const firstDayOfMonth = new Date(year, month, 1) // it will print the first day of that nav month.
     const daysInMonth = new Date(year, month + 1, 0).getDate(); 
     //0 is the last day of previous month
     // month + 1 is the next month
@@ -63,7 +62,7 @@ function load() {
         month: 'numeric',
         day: 'numeric', 
     }); //converts to weekday month/day/year of the first day of the month
-    console.log(dateString)
+    // console.log(dateString)
 
     const paddingDays = weekdays.indexOf(dateString.split(', ')[0]); //if the first day of the month is on a Friday, padding days is 5!  
     //get id element to display month (The whole word, not abv) and year in the top of calendar
@@ -77,27 +76,17 @@ function load() {
         daySquare.classList.add('day');
 
         const dayString = `${month + 1}/${i - paddingDays}/${year}`
+        console.log(dayString)
 
 
         if (i > paddingDays) {
             daySquare.innerText = i - paddingDays;
-            gettingEventData(dayString, daySquare)
+            gettingEventData('/get_event',dayString, daySquare)
 
             daySquare.addEventListener('click', ()=> {
                 document.querySelector('#show-events').innerHTML = ""
                 document.querySelector('#eventDay').innerHTML = ""
-                fetch("/get_event")
-                    .then(response => response.json())
-                    .then(responseJSON =>{
-                        for (const [key, value] of Object.entries(responseJSON)) {
-
-                            if (responseJSON[key][0] === dayString){
-                                document.querySelector('#eventDay').innerHTML = `<di> Date: ${dayString}</div>`
-                                document.querySelector('#show-events').insertAdjacentHTML('beforeend', `<br><div> Event: ${responseJSON[key][1]}</div>
-                                                                                                        <div> Time: ${responseJSON[key][2]}</div>` )
-                            };
-                    }});
-            
+                gettingTodayData('/get_event', dayString);     
             })
 
         } else {
@@ -105,12 +94,9 @@ function load() {
         }
 
         if (i - paddingDays === day && nav === 0){
-            daySquare.id = 'currentDay';
-            gettingTodayData(dayString); 
-          
-            
+            daySquare.id = 'currentDay'; //add color pink for todays day
+            gettingTodayData('/get_event', dayString);           
         }
-    
     calendar.appendChild(daySquare);
     }
 }
@@ -132,4 +118,4 @@ function initButtons(){
 
 initButtons();
 load();
-gettingEventData();
+
