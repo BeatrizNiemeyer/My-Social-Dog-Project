@@ -347,30 +347,56 @@ def update_user():
 
     return redirect("/profile")
 
-@app.route("/add_dog.json")
+@app.route("/add_dog.json", methods=["POST"])
 def add_dog():
     """ Adding a new dog """
 
     if "user" in session:
         user_id = session["user"]
 
-    dog_name = request.args.get('dog_name')
-    dog_age = request.args.get('dog_age')
-    dog_size = request.args.get('dog_size')
-    dog_breed = request.args.get('dog_breed')
-    dog_breed = dog_breed.lower()
+    dogName = request.get_json().get('dogName')
+    dogAge = request.get_json().get('dogAge')
+    dogSize = request.get_json().get('dogSize')
+    dogBreed = request.get_json().get('dogBreed')
+    dogBreed = dogBreed.lower()
     print("********************************")
-    print(dog_name)
-    print(dog_age)
-    print(dog_size)
-    print(dog_breed)
 
-    dog = crud.create_dog_profile(user_id, dog_name, dog_age, dog_size, dog_breed)
+
+    dog = crud.create_dog_profile(user_id, dogName, dogAge, dogSize, dogBreed)
     db.session.add(dog) #Adding user's dog to the data base
     db.session.commit()
 
-    return jsonify({"dog_name": dog_name, "dog_age": dog_age, "dog_size": dog_size, "dog_breed":dog_breed })
+    new_dog = {
+        "dogName": dogName,
+        "dogAge":dogAge,
+        "dogSize": dogSize,
+        "dogBreed": dogBreed,
+        "dogId": dog.dog_id
+    }
+
+
+    return jsonify({"dogAdded": new_dog})
   
+@app.route("/show_user_dogs")
+def show_dog():
+    """return user dogs"""
+
+    if "user" in session:
+        user_id = session["user"]
+
+    dogs = crud.get_user_dog(user_id)
+
+    list_of_dogs = []
+
+    for dog in dogs:
+        dog_data = {"dogName": dog.dog_name, "dogAge": dog.dog_age, "dogSize":dog.dog_size, "dogBreed":dog.dog_breed, "dogId": dog.dog_id}
+        list_of_dogs.append(dog_data)
+
+    print("**************************************")
+    print(list_of_dogs)
+
+    return jsonify({"dogs": list_of_dogs})
+
 
 @app.route("/delete_account")
 def delete_account():
@@ -426,12 +452,12 @@ def create_event():
         user_id = session["user"]
 
     event_body = request.form.get('event_name') 
-    date_for_event = request.form.get('event_date') #string
-    event_time_str = request.form.get('event_time') #string and then convert to datetime
+    date_for_event = request.form.get('event_date') #string 2022-04-05, i need to convert it like >> 04/05/2022
+    event_time_str = request.form.get('event_time') #string in 24hour >> convert to datetime and in 12hour format
     event_time = datetime.strptime(event_time_str, '%H:%M') #time in datetime
 
     correct_date = date_for_event.split("-")
-    year = correct_date[0] #>> ['2022', '09', '09']
+    year = correct_date[0] 
     month = correct_date[1]
     day = correct_date[2]
 
@@ -443,14 +469,17 @@ def create_event():
 
     event_date = month + "/" + day + "/" + year
 
-    if int(event_time_str[:2]) <= 12:
+    if int(event_time_str[:2]) < 12:
         time = event_time_str + "AM"
+    elif int(event_time_str[:2]) == 12:
+        time = event_time_str + "PM"
     else:
         time = str(int(event_time_str[:2]) - 12) + event_time_str[2:] + "PM"
 
     event = crud.create_event(user_id, event_body, event_date, event_time, time )
     db.session.add(event)
     db.session.commit()
+    flash("Your event was created!")
 
     return redirect('/calendar')
 
@@ -462,15 +491,15 @@ def get_user_events():
     if "user" in session:
         user_id = session["user"]
 
-    print(user_id)
-
-
+    #getting user events
     events = crud.get_event_by_id(user_id)
 
+    #sorting events by time
     sorted_events = crud.sort_list_by_time(events)
     
     list_events = []
 
+    #creating a dictionary with event info and appending to a list
     for event in sorted_events:
         event_dict = {"id": str(event.event_id), "date": event.event_date_str, "body":event.event_body, "time": event.event_time_str}
         list_events.append(event_dict)
@@ -482,13 +511,13 @@ def get_user_events():
 def delete_event():
     """delete an event"""
 
+    #getting event_id from form
     event_id = request.args.get("event_id")
-    print("*******************************")
-    print(event_id)
-
+   
+   #getting event object
     event = crud.get_event(event_id)
-    print("This is the vent", event)
-
+  
+    #deleting it
     db.session.delete(event)
     db.session.commit()
     flash("Your event was deleted!")

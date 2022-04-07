@@ -1,24 +1,24 @@
 //Function to add events in the day div (when clicking the day and today's day)
 function gettingTodayData (url, dayString) { 
-    const data = fetch(url)
-                .then(response => response.json())
-                .then(responseJSON => {
-                responseJSON.map((d) => {
-                console.log(d)
-                if (d.date === dayString){
-                document.querySelector('#eventDay').innerHTML = `<div> Date: ${dayString}</div>`
-                        document.querySelector('#show-events').insertAdjacentHTML('beforeend', `<br><div> Event: ${d.body}</div>
-                                                                                              <div> Time: ${d.time}</div>
-                                                                                              <form action="/delete_event">
-                                                                                              <input type="hidden"  name="event_id" value=${d.id}>
-                                                                                              <button id="${d.id}">Delete</button><br></form>` )
-                }})
-             }) 
+   fetch(url)
+    .then(response => response.json())
+    .then(responseJSON => {
+    responseJSON.map((d) => {
+    console.log(d)
+    if (d.date === dayString){
+        document.querySelector('#eventDay').innerHTML = `<h4>Events</h4><div> Date: ${dayString}</div>`
+        document.querySelector('#show-events').insertAdjacentHTML('beforeend',`<div> Event: ${d.body}</div>
+                                                                                <div> Time: ${d.time}</div>
+                                                                                <form action="/delete_event">
+                                                                                <input type="hidden"  name="event_id" value=${d.id}>
+                                                                                <button id="${d.id}">Delete</button><br></form><br>`)
+            };
+        });
+    }); 
 }
 
 //Function to add color pink to event days
 function gettingEventData(url, dayString, daySquare) {
-
     fetch(url)
     .then(response => response.json())
     .then(responseJSON =>  {
@@ -26,9 +26,10 @@ function gettingEventData(url, dayString, daySquare) {
     console.log(d)
     if (d.date === dayString){
         daySquare.classList.add('eventDay');                
-        }
-    })}
-    )}
+            };
+        });
+    });
+}
 
 
 
@@ -76,7 +77,6 @@ function load() {
         daySquare.classList.add('day');
 
         const dayString = `${month + 1}/${i - paddingDays}/${year}`
-        console.log(dayString)
 
 
         if (i > paddingDays) {

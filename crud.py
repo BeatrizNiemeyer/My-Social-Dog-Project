@@ -66,6 +66,13 @@ def show_all_dogs():
 
     return dogs
 
+def get_user_dog(user_id):
+    """Return all user dogs"""
+
+    dogs = Dog.query.filter_by(user_id=user_id).all()
+
+    return dogs
+
 
 def create_message(sender_id, receiver_id, body, date):
     """Create a message """

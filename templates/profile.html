@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
+
 {% block title %}Dog Profiles{% endblock %}
+
+{% block head %}
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+{% endblock %}
 
 {% block body %}
 
@@ -34,75 +41,8 @@
 </form>
 <br>
 
-<h3>Your dog Information:</h3>
-<ul>
-{% for dog in user.dogs %} 
-    {% if 1 > dog.dog_age %}
-        <li>Name: {{dog.dog_name}}</li>
-        <li> Age: less than 1 year old!</li>
-        <li> Size: {{dog.dog_size}}</li>
-        <li> Breed: {{dog.dog_breed}}</li>
-        <br>
-    {% else %}
-        <li>Name: {{dog.dog_name}}</li>
-        <li> Age: {{dog.dog_age}}</li>
-        <li> Size: {{dog.dog_size}}</li>
-        <li> Breed: {{dog.dog_breed}}</li>
-        <br>
-    {% endif %}
-{% endfor %}
-<div id="added-dog"> </div>
-</ul>
 
-
-
-<form id="add-dog-form"> 
-    <h4>Add a dog:</h4>
-    <p>
-        Dog name <input id="dog-name" type="text" name="dog_name">
-    </p>
-
-    <p>
-        Dog Age (In years)
-         <select id="dog-age" name="dog_age">
-              <option value=0>Less than 1</option>
-              <option value=1>1</option>
-              <option value=2>2</option>
-              <option value=3>3</option>
-              <option value=4>4</option>
-              <option value=5>5</option>
-              <option value=6>6</option>
-              <option value=7>7</option>
-              <option value=8>8</option>
-              <option value=9>9</option>
-              <option value=10>10</option>
-              <option value=11>11</option>
-              <option value=12>12</option>
-              <option value=13>13</option>
-              <option value=14>14</option>
-              <option value=15>15</option>
-              <option value=16>More than 15</option>
-          </select> 
-
-    </p>
-
-    <p>
-        Dog Size 
-        <select id="dog-size" name="dog_size">
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-          </select> 
-    </p>
-
-    <p>
-        Dog Breed <input id="dog-breed" type="text" name="dog_breed">
-    </p>
-
-    <button  type="submit"> Add dog </button>
-
-</form>
-
+<div id="dog-container"></div>
 
 <form action="/delete_account">
 
@@ -110,5 +50,7 @@
 
 </form>
 
-<script src="/static/js/addDog.js"></script>
+<!-- <script src="/static/js/addDog.js"></script> -->
+<script src="/static/addingDog.jsx" type="text/jsx"></script>
+
 {% endblock %}
