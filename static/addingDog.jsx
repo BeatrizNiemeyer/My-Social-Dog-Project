@@ -28,7 +28,11 @@ function AddDog(props) {
             const {dogName: dogName, dogAge: dogAge, dogSize: dogSize, dogBreed:dogBreed, dogId:dogId} = dogAdded;
             props.addDog(dogName, dogAge, dogSize, dogBreed, dogId);
         });
-      });
+      }); 
+      setName("")
+      setAge("0")
+      setSize("small")
+      setBreed("")
     }
 
     return (

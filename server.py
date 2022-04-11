@@ -4,7 +4,7 @@ from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
 from datetime import datetime
-from model import db, User, Dog, Message, connect_to_db
+from model import db, User, Dog, connect_to_db
 import os
 import cloudinary.uploader
 
@@ -34,16 +34,24 @@ def login():
     password = request.form.get('password')
 
     #Get user's password to check if the ented password is correct
-    user_password = crud.get_password_by_email(email)
+    # user_password = crud.get_password_by_email(email)
+    user = crud.get_user_by_email(email)
 
-    if crud.check_hash_password(password, user_password):
-        session['user'] = crud.get_user_id_by_email(email)
-        flash('Logged in!')
-        return redirect('/all_profiles')
+    if user and password:
+        user_password = crud.get_password_by_email(email)
+        user = crud.get_user_by_email(email)
+
+        if crud.check_hash_password(password, user_password):
+            session['user'] = crud.get_user_id_by_email(email)
+            flash('Logged in!')
+            return redirect('/all_profiles')
+        else:
+            flash('Incorrect password, please try again!')
     else:
-        flash('Incorrect password, please try again!')
+        flash('Information is incorrect, try again!')
 
-        return redirect('/')
+            
+    return redirect('/')
 
 @app.route('/new_users', methods = ['POST'])
 def register_user():
@@ -60,11 +68,7 @@ def register_user():
     dog_size = request.form.get('dog_size')
     dog_breed = request.form.get('dog_breed')
     dog_breed = dog_breed.lower()
-    print("********************************")
-    print(dog_name)
-    print(dog_age)
-    print(dog_size)
-    print(dog_breed)
+
     
     #Getting user object to check if they are already registered 
     user = crud.get_user_by_email(email)
@@ -359,7 +363,7 @@ def add_dog():
     dogSize = request.get_json().get('dogSize')
     dogBreed = request.get_json().get('dogBreed')
     dogBreed = dogBreed.lower()
-    print("********************************")
+ 
 
 
     dog = crud.create_dog_profile(user_id, dogName, dogAge, dogSize, dogBreed)

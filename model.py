@@ -90,6 +90,15 @@ def connect_to_db(flask_app, db_uri="postgresql:///msd_data", echo=False):
 
     print("Connected to the db!")
 
+def example_data():
+    """ Create example data for the test database"""
+
+    user_1 = User(fullname='Ray', email='raymond@hb.com', password= '123', address='7 N 8th St, Richmond VA', profile_photo= 'https://images.emojiterra.com/google/android-11/512px/1f436.png', longitude= '-77.51126620527393', latitude='37.639684450000004')
+    
+    db.session.add(user_1)
+    db.session.commit()
+
+
 
 if __name__ == "__main__":
     from server import app
