@@ -1,0 +1,64 @@
+body{
+        background: url("/static/images/homepage4.jpg") no-repeat center;
+        background-size:cover;
+        height: 870px;
+        text-align: center;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        color: rgb(7, 68, 7);
+        margin:0%;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        padding: 0%;
+      }
+
+.flash-msg {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+.login-form {
+    text-align: center;
+    top: 50%;
+    color: black;
+    width: 400px;
+    height: 500px;
+    padding: 80px 0px;
+    background: rgba(181, 163, 158, 0.09);
+    border: 20px;
+    padding-top: 15px;
+    padding-bottom: 200px;
+    margin-left: 20px;
+
+    
+}
+
+.main-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 50px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+
+}
+
+.hidden {
+    display: none;
+   }
+
+.dog-form-hidden {
+     display:none;
+}
+
+.login-button {
+        background-color: #18681a; /* Green */
+        border: none;
+        color: white;
+        padding: 0px 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+}

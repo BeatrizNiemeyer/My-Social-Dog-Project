@@ -1,0 +1,64 @@
+[
+    {
+        "fullname": "Ray",
+        "email": "ray@hb.com",
+        "password": "123",
+        "address": "9001 Staples Mill Rd, Henrico, VA 23228",
+        "dog_name": "Toby",
+        "dog_age": "3",
+        "dog_size": "large",
+        "dog_breed": "goldendoodle"
+    },
+    {
+        "fullname": "Bia",
+        "email": "bia@hb.com",
+        "password": "123",
+        "address": "7 N 8th st Richmond VA 23219",
+        "dog_name": "Copper",
+        "dog_age": "2",
+        "dog_size": "medium",
+        "dog_breed": "goldendoodle"
+    },
+    {
+        "fullname": "Beth",
+        "email": "beth@hb.com",
+        "password": "123",
+        "address": "5401 W Broad St, Richmond, VA 23230",
+        "dog_name": "Penny",
+        "dog_age": "2",
+        "dog_size": "small",
+        "dog_breed": "mix"
+    },
+    {
+        "fullname": "Mark",
+        "email": "mark@hb.com",
+        "password": "123",
+        "address": "2801 E Franklin St, Richmond, VA 23223",
+        "dog_name": "Boone",
+        "dog_age": "5",
+        "dog_size": "large",
+        "dog_breed": "pitbull"
+    },
+    {
+        "fullname": "Steve",
+        "email": "steve@hb.com",
+        "password": "123",
+        "address": "11698 W Broad St, Richmond, VA 23233",
+        "dog_name": "Rudy",
+        "dog_age": "9",
+        "dog_size": "small",
+        "dog_breed": "corgi"
+    },
+    {
+        "fullname": "Lize",
+        "email": "lize@hb.com",
+        "password": "123",
+        "address": "12200 Wegmans Blvd, Henrico, VA 23233",
+        "dog_name": "Lilly",
+        "dog_age": "0",
+        "dog_size": "small",
+        "dog_breed": "mix"
+    }
+
+
+]

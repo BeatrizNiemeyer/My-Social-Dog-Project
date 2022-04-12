@@ -14,14 +14,15 @@
     </p>
   {% endfor %}
 
-  <h1>My Social Dog</h1>
+  <i><h1 class="main-title">MySocialDog</i></h1></i>
   </head>
 <body>
 
+<div class= "login-form">
 
+    <h2>Log In</h2>
 
-<h2>Log In</h2>
-  <form action="/login" method="POST">
+  <form  action="/login" method="POST">
       <p>
         Email <input type="text" name="email" placeholder="email">
       </p>
@@ -31,13 +32,14 @@
       </p>
 
       <p>
-      <input type="submit">
+      <input class="login-button" type="submit" value="Log In">
       </p>
   </form>
 
-<button id="registration">Register</button>
+<button class="login-button" id="registration">Register</button>
 
-  <form   id="registration-form" class="hidden" action="/new_users" method="POST">
+
+  <form   id="registration-form" class= "hidden"  action="/new_users" method="POST">
 
     <h2>Create an Account</h2>
     <p>
@@ -56,9 +58,9 @@
       Address <input type="text" name="address">
     </p>
 
-    <button id="dog-registration-button">Add a dog</button>
+    <button class="login-button" id="dog-registration-button">Add a dog</button>
     <p>
-      <input id="submit-button" type="submit">
+      <input id="submit-button" class="login-button" type="submit" value="Create Account">
     </p>
    
     
@@ -109,10 +111,11 @@
     </p>
 
     <p>
-      <input type="submit">
+      <input  class="login-button" id="submit-button" type="submit" value="Create Account">
     </p>
   </div>
   </form>
+</div>
 
 
   <script src="/static/js/registration.js"></script>

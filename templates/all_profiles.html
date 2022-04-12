@@ -1,35 +1,41 @@
 {% extends 'base.html' %}
 {% block title %}Dog Profiles{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/static/css/all_profiles.css">
+{% endblock %}
 
 {% block body %}
-<i><div id="dog-fact"  class="center">Welcome to MySocialDog!</div></i>
 <br>
-<h3>List of friends: </h3>
+<div id="dog-fact"  class="center">Welcome to MySocialDog!</div>
+<br>
     {% for user in users %}
         {% if user.user_id != user_id  %}
-  
-        <h4>{{user.fullname}}</h4> 
-            <img src="{{user.profile_photo}}" width="150" height="150">
+        <div class="card">
+            <img src="{{user.profile_photo}}" class="image">
+            <h4 class="name">{{user.fullname}}</h4>
                 
+            <div class="dog_desc">
             {% if not user.dogs %}
                 <br>
                 {{user.fullname}} doesn't have dogs yet!
                 <br>
                 {% endif %}
+            </div>
                 
-
                 {% for user in user.dogs %}
                         
                     {% if 1  > user.dog_age %}
-                        <br>
+                    <div class="dog_desc">
                         {{user.user.fullname}} is the owner of {{user.dog_name}}!
                         <br>
                         {{user.dog_name}} is less than a year!
                         <br>
                         And this pup is a {{user.dog_size}} {{user.dog_breed}}
                         <br>
+                    </div>
 
                     {% else %}
+                    <div class="dog_desc">
                         <br>
                             {{user.user.fullname}} is the owner of {{user.dog_name}}!
                         <br>  
@@ -37,20 +43,31 @@
                         <br>
                             And this pup is a {{user.dog_size}} {{user.dog_breed}}
                         <br>
-
+                        
                     {% endif %}
                    
 
-             {% endfor %}
-            <br>
-            <form action="/write_message" >     
-            <input type="hidden"  name="user_id" value={{user.user_id}}>
-                <button type="submit" >Send Message</button>
-            </form>
-            <br>
-        {% endif %}
+                {% endfor %}
+            </div>
+ 
+  
+                <br>
+                <form action="/write_message" >     
+                <input type="hidden"  name="user_id" value={{user.user_id}}>
+                    <button class="btn-msg" type="submit" >Send Message</button>
+                </form>
+                <br>
+            {% endif %}  
 
     {% endfor %}
+    <br>
+<br>
+<br>
+<br>
+<br>
+</div>
+
+</div>
     <script src="/static/js/dogFact.js"></script>
     
 {% endblock %}
