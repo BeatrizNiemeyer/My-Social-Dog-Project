@@ -39,7 +39,8 @@ function AddDog(props) {
       <React.Fragment>
           <h4>Add new dog</h4>
             <p>
-            Dog name 
+            <label>Dog name </label>
+            <br/>
             <input 
                 id="dogName" 
                 type="text" 
@@ -48,8 +49,8 @@ function AddDog(props) {
                 onChange={(event) => setName(event.target.value)}
             ></input>
             </p>
-
-            Dog Age (In years)
+            <label>Dog Age (In years)</label>
+            <br></br>
              <select 
                 id="dogAge" 
                 name="dogAge" 
@@ -75,9 +76,10 @@ function AddDog(props) {
                 <option value="16">More than 15</option>
                 
             </select>
+            <br/>
+            <br/>
+            <label>Dog Size</label>
             <br></br>
-
-            Dog Size 
             <select 
                 id="dogSize" 
                 name="dogSize" 
@@ -88,9 +90,10 @@ function AddDog(props) {
                 <option value="large">Large</option>
 
             </select>
-
-            <br></br>
-            Dog Breed 
+            <br/>
+            <br/>
+            <label>Dog Breed </label>
+            <br/>
             <input 
                 id="dogBreed" 
                 type="text" 
@@ -98,9 +101,11 @@ function AddDog(props) {
                 value={dogBreed}
                 onChange={(event) => setBreed(event.target.value)}>
             </input>
-            
+            <br></br>
+            <br/>
 
             <button type="button" onClick={addNewDog}>Add Dog</button>
+            <br/>
       
       </React.Fragment>
     );
@@ -139,6 +144,7 @@ function AddDog(props) {
     return (
       <React.Fragment>
         <AddDog addDog={addDog} />
+        <br/>
         <h4>Your Dog information</h4>
         <div >{listOfDogs}</div>
       </React.Fragment>

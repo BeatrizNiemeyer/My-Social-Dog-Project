@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}Your Messages!{% endblock %}
+{% block head %} 
+<link rel="stylesheet" href="/static/css/inbox.css">  
+{% endblock %}
 
 {% block body %}
+
+<div class="messages">
+
 <h1>Messages</h1>
+<br>
 
 <ul> 
 {% for message in sorted_messages_by_date %}
@@ -15,5 +22,5 @@
     <input type="hidden"  name="user_id" value={{receiver_id}}>
     <button type="submit"> Write a message </button>
 </form>
-
 {% endblock %}
+</div>

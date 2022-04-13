@@ -1,19 +1,19 @@
 body {
-    background: url("/static/images/all_profiles6.jpg") repeat;
-    background-size:cover;
+    background: url("/static/images/corgi26.JPG") repeat center;
+    background-size:auto;
     /* background: rgb(178, 204, 178); */
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
-    font-weight: 550;
+    /* font-weight: 550; */
 
 }
 
 #dog-fact{
     margin-top:40px;
     margin-bottom: 0%;
-    font-size: 24px;
+    font-size: 20px;
     font-family: 'Courier New', Courier, monospace;
-    font-weight:400;
+    font-weight:680;
 }
 
 .card {
@@ -25,6 +25,7 @@ body {
     margin-top: 80px;
     margin-bottom: 100px;
     box-shadow: 0 12px 13px rgba(0, 0, 0, 0.16), 0;
+    border-top-width: 3px;
 }
 
 .image {
@@ -49,7 +50,7 @@ body {
     margin-right: 65px;
     margin-top: 10px;
     margin-bottom: 0px;
-    font-weight:570;
+    font-weight:530;
 }
 
 .btn-msg {

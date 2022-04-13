@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}Your Messages!{% endblock %}
+{% block head %} 
+<link rel="stylesheet" href="/static/css/main_inbox.css">  
+{% endblock %}
 
 {% block body %}
+
+<div class="main_inbox">
 <h1>Sent Messages</h1>
 
 {% for user in list_of_users_for_inbox %}
@@ -12,6 +17,8 @@
                 <button type="submit" >Go to inbox</button>
     </form>
 </ul>
+
+</div>
 
 {% endfor %}
 {% endblock %}

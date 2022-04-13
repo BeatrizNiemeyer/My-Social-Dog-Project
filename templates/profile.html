@@ -6,13 +6,15 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<link rel="stylesheet" href="/static/css/profile.css">
 {% endblock %}
 
 {% block body %}
 
-<h1>{{user.fullname}}'s Profile:</h1>
+<h1 id="name">{{user.fullname}}'s Profile</h1>
+<div class="profile">
 
-<h3>Your Information</h3>
+<h3 id="info">Your Information</h3>
 <img src="{{user.profile_photo}}" width="150" height="150">
 <ul>
 <li>Name: {{user.fullname}}</li>
@@ -44,13 +46,17 @@
 
 <div id="dog-container"></div>
 
+
 <form action="/delete_account">
 
     <button type="submit"> Delete Account </button>
 
 </form>
+<br>
+
 
 <!-- <script src="/static/js/addDog.js"></script> -->
 <script src="/static/addingDog.jsx" type="text/jsx"></script>
+</div>
 
 {% endblock %}

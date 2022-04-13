@@ -38,7 +38,7 @@ for user in user_data:
     db.session.add(new_user)
     db.session.commit()
 
-    profile_photo = "https://images.emojiterra.com/google/android-11/512px/1f436.png"
+    profile_photo = "/static/images/corgi_emogi.png"
     db.session.query(User).filter(User.email == email).update({"profile_photo":profile_photo})
     db.session.commit()
 

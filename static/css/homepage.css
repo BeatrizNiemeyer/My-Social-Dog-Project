@@ -7,7 +7,7 @@ body{
         font-weight: bold;
         color: rgb(7, 68, 7);
         margin:0%;
-        margin-top: 0px;
+        margin-top: 50px;
         margin-bottom: 0px;
         padding: 0%;
       }
@@ -22,32 +22,25 @@ body{
     top: 50%;
     color: black;
     width: 400px;
-    height: 500px;
+    height: 100px;
     padding: 80px 0px;
-    background: rgba(181, 163, 158, 0.09);
+    background: rgba(180, 206, 178, 0.61);
     border: 20px;
     padding-top: 15px;
     padding-bottom: 200px;
     margin-left: 20px;
-
-    
+    margin-top: 150px;
+    border-radius: 30px;
 }
 
 .main-title {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 50px;
+    font-size: 55px;
     margin-top: 10px;
     margin-bottom: 0px;
 
 }
 
-.hidden {
-    display: none;
-   }
-
-.dog-form-hidden {
-     display:none;
-}
 
 .login-button {
         background-color: #18681a; /* Green */
@@ -61,4 +54,21 @@ body{
         margin: 4px 2px;
         transition-duration: 0.4s;
         cursor: pointer;
+}
+
+.registration {
+        text-align: center;
+        top: 50%;
+        color: black;
+        width: 400px;
+        height: 300px;
+        padding: 80px 0px;
+        background: rgba(180, 206, 178, 0.61);
+        border: 20px;
+        padding-top: 30px;
+        padding-bottom: 200px;
+        margin-left: 20px;
+        border-radius: 30px;
+        margin-top: 115px;
+
 }

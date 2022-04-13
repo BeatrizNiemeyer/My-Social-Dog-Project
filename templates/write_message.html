@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
 {% block title %}Messages{% endblock %}
 
+{% block head %} 
+<link rel="stylesheet" href="/static/css/write_message.css">  
+{% endblock %}
+
 {% block body %}
+
+<div class="message">
 <h2>Write a message!</h2>
 
-<form action="/inbox"  method="POST" >
+<form action="/inbox"  method="POST"  >
     <input type="hidden"  name="receiver_id" value={{receiver_id}}>
-    <p>
-        Enter your message <textarea name="message" ></textarea>
-    </p>
+   <b><p>
+        Enter your message <br><textarea name="message" id="msg-form"></textarea>
+    </p></b>
 
     <input type="submit">
 </form>
+</div>
 
 {% endblock %}

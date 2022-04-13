@@ -53,6 +53,10 @@ def login():
             
     return redirect('/')
 
+@app.route("/registration")
+def registration():
+    return render_template("registration.html")
+
 @app.route('/new_users', methods = ['POST'])
 def register_user():
     """ Create a new user """
@@ -81,7 +85,7 @@ def register_user():
         new_user = crud.create_user(fullname, email, hashed_password, address, longitude, latitude) 
         db.session.add(new_user) #Adding the new user to data base
         db.session.commit()
-        profile_photo = "https://images.emojiterra.com/google/android-11/512px/1f436.png"
+        profile_photo = "/static/images/corgi_emogi.png"
         db.session.query(User).filter(User.email == email).update({"profile_photo":profile_photo})
         db.session.commit()
         user = crud.get_user_id_by_email(email)
@@ -94,7 +98,7 @@ def register_user():
         db.session.add(new_user) #Adding the new user to data base
         db.session.commit()
         flash('Your account has been successfully created. You can log in now')
-        profile_photo = "https://images.emojiterra.com/google/android-11/512px/1f436.png"
+        profile_photo = "/static/images/corgi_emogi.png"
         db.session.query(User).filter(User.email == email).update({"profile_photo":profile_photo})
         db.session.commit()
     else:
