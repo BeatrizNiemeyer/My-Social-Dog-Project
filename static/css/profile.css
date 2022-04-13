@@ -1,0 +1,52 @@
+body {
+    background: url("/static/images/corgi17.jpg") repeat;
+    background-size:cover;
+    /* background: rgb(178, 204, 178); */
+    text-align:center;
+    font-family:"Poppins", sans-serif;
+    letter-spacing: 1px;
+
+   
+}
+
+#name {
+    margin-top: 50px;
+    font-size: 90;
+}
+
+#info{
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.profile {
+    margin-top: 120px;
+    margin-left: 550px;
+    text-align:center;
+    font-family:"Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: 390;
+}
+
+.navbar-light .navbar-brand {
+    color: #18681a;
+    font-weight: 450;
+}
+
+.navbar-light .navbar-brand:hover {
+    color: rgb(88, 135, 49);
+}
+
+.dropdown-item {
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.form-control {
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.btn-outline-success {
+    color: #18681a;
+  }

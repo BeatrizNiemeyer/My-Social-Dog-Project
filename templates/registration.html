@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>
+      MySocialDog
+    </title>
+   <link rel="stylesheet" href="/static/css/login.css">
+
+  </head>
+<body>
+<section>
+        <div class="imgBox">
+            <img src="/static/images/homepage4.jpg" >
+        </div>
+
+        <div class="contentBx">
+        <div class="formBox">
+        <h2>Create an Account</h2>
+
+        <form id="registration-form" class= "hidden"  action="/new_users" method="POST">
+        <div class="inputBx">
+        <span>Fullname </span>
+        <input type="text" name="fullname">
+        </div>
+
+        <div class="inputBx">
+        <span> Email </span> 
+        <input type="text" name="email" placeholder="email">
+        </div>
+
+        <div class="inputBx">
+        <span>
+        Password</span><input type="password" name="password" placeholder="password">
+        </div>
+
+
+        <div class="inputBx">
+        <span>
+        Address  </span><input type="text" name="address">
+
+        </div>
+
+    <div id="dog-registration-form" class="dog-form-hidden">
+    
+        <h2>Dog Information:</h2>
+
+        <div class="inputBx">
+        <span>
+            Dog Name </span><input type="text" name="dog_name">
+        </div>
+
+        <div class="inputBx">
+        <span>
+            Dog Age (In years)</span>
+            <select id="select_age" name="dog_age">
+                <option value=0>Less than 1</option>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+                <option value=6>6</option>
+                <option value=7>7</option>
+                <option value=8>8</option>
+                <option value=9>9</option>
+                <option value=10>10</option>
+                <option value=11>11</option>
+                <option value=12>12</option>
+                <option value=13>13</option>
+                <option value=14>14</option>
+                <option value=15>15</option>
+                <option value=16>More than 15</option>
+            </select> 
+
+        </div>
+    
+
+        <div class="inputBx">
+        <span>
+            Dog Size  </span>
+            <select id="select_size" name="dog_size">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select> 
+        </div>
+
+        <div class="inputBx"> 
+        <span>
+            Dog Breed </span> <input type="text" name="dog_breed">
+        </div>
+
+        <div class="inputBx">
+        <input  class="login-button" id="submit-button" type="submit" value="Create Account">
+        </div>
+
+        <div class="inputBx">
+            <p>Already have an account? <a href="/">Log In</a></p>
+        </div>
+    </form>
+    </div>
+    </div>
+</section>  
+</body>
+</html>

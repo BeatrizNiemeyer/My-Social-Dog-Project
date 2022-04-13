@@ -6,38 +6,47 @@
     <title>
       MySocialDog
     </title>
-    <link rel="stylesheet" href="/static/css/homepage.css">
+    <link rel="stylesheet" href="/static/css/login.css">
     
-    {% for msg in get_flashed_messages() %}
-    <p class="flash-msg">
-      {{ msg }}
-    </p>
-  {% endfor %}
-
-  <i><h1 class="main-title">MySocialDog</i></h1></i>
   </head>
 <body>
 
-<div class= "login-form">
+  <section>
+    <div class="imgBox">
+      <img src="/static/images/homepage4.jpg" >
+  </div>
+  <div class="contentBx">
+   <div class="formBox">
+     <div>   {% for msg in get_flashed_messages() %}
+      <div class="flash-msg">
+        {{ msg }}
+      </div>
+    {% endfor %}</div>
+  
+  <h1 id="main-title">MySocialDog</h1>
 
     <h2>Log In</h2>
 
   <form  action="/login" method="POST">
-      <p>
-        Email <input type="text" name="email" placeholder="email">
-      </p>
+    <div class="inputBx">
+      <span>Email</span> <input type="text" name="email" placeholder="email">
+    </div>
 
-      <p>
-        Password <input type="password" name="password" placeholder="password">
-      </p>
-
-      <p>
+    <div class="inputBx">
+      <span>
+        Password </span><input type="password" name="password" placeholder="password">
+    </div>
+    
+    <div class="inputBx">
       <input class="login-button" type="submit" value="Log In">
-      </p>
+    </div>
+
+    <div class="inputBx">
+    <p>Don't have an account? <a id="registration" href="/registration">Sign up</a></p>
+  </div>
+
   </form>
-
-<a id="registration" href="/registration">Register</a>
-
+</section>
 </body>
 </html>
 

@@ -3,8 +3,9 @@ body {
     background-size:auto;
     /* background: rgb(178, 204, 178); */
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    /* font-weight: 550; */
+    font-family:"Poppins", sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
 
 }
 
@@ -12,8 +13,9 @@ body {
     margin-top:40px;
     margin-bottom: 0%;
     font-size: 20px;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight:680;
+    font-family:"Poppins", sans-serif;
+    font-weight:430;
+    color: black;
 }
 
 .card {
@@ -26,6 +28,7 @@ body {
     margin-bottom: 100px;
     box-shadow: 0 12px 13px rgba(0, 0, 0, 0.16), 0;
     border-top-width: 3px;
+    border-color: rgb(200, 205, 207);
 }
 
 .image {
@@ -39,18 +42,18 @@ body {
 .name {
     margin-top: 25px;
     color: black;
-    font-weight:600;
+    font-weight:500;
 }
 
 
 .dog_desc {
     color: black;
-    font-size: 20px;
+    font-size: 18px;
     margin-left: 65px;
     margin-right: 65px;
     margin-top: 10px;
     margin-bottom: 0px;
-    font-weight:530;
+    font-weight:399;
 }
 
 .btn-msg {
@@ -67,7 +70,32 @@ body {
 
 .btn-msg:hover {
     color: rgb(253, 255, 253);
-    background: rgb(105, 148, 107);
+    background: rgb(88, 135, 49);
     transition: all 300ms linear;
     cursor: pointer;
 }
+
+
+
+.navbar-light .navbar-brand {
+    color: #18681a;
+    font-weight: 450;
+}
+
+.navbar-light .navbar-brand:hover {
+    color: rgb(88, 135, 49);
+}
+
+.dropdown-item {
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.form-control {
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.btn-outline-success {
+    color: #18681a;
+  }

@@ -1,8 +1,16 @@
 body {
     background: url("/static/images/corgi2.jpg") repeat;
     background-size:cover;
-    font-family: 'Courier New', Courier, monospace;
+    font-family:"Poppins", sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
   }
+
+  h1{
+    font-weight: 399;
+    font-size: 40;
+}
+
   button {
     width: 75px;
     height: 40px;
@@ -19,7 +27,7 @@ body {
     padding: 10px;
     color: #3577c2;
     font-size: 26px;
-    font-family: sans-serif;
+    font-family:"Poppins", sans-serif;
     display: flex;
     justify-content: space-between;
   }
@@ -28,7 +36,8 @@ body {
   }
   #calendar-container {
     margin-right:0px ;
-    width: 900px;
+    width: 871px;
+    margin-top: 50px;
   }
   #weekdays {
     width: 100%;
@@ -79,6 +88,7 @@ body {
 
   .event {
       width: 300px;
+      margin-top: 70px;
   }
 
   #waiting{
@@ -89,3 +99,39 @@ body {
   .col-1 {
     text-align: left;
   }
+
+  .navbar-light .navbar-brand {
+    color: #18681a;
+    font-weight: 450;
+}
+
+.navbar-light .navbar-brand:hover {
+    color: rgb(88, 135, 49);
+}
+
+.dropdown-item {
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.form-control {
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.btn-outline-success {
+    color: #18681a;
+  }
+
+  h1{
+    font-weight: 399;
+    font-size: 40;
+    text-align: center;
+}
+
+#event-details {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 20px;
+
+}

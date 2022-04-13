@@ -145,6 +145,7 @@ function AddDog(props) {
       <React.Fragment>
         <AddDog addDog={addDog} />
         <br/>
+        <br/>
         <h4>Your Dog information</h4>
         <div >{listOfDogs}</div>
       </React.Fragment>

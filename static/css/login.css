@@ -1,0 +1,167 @@
+@import url("/static/images/homepage4.jpg");
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family:"Poppins", sans-serif;
+}
+
+section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+section .imgBox {
+    position: relative;
+    width: 50%;
+    height: 100%;
+
+}
+
+section .imgBox img {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
+
+section .contentBx {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height:100%;
+}
+
+section .contentBx .formBox {
+    width: 50%;
+}
+
+section .contentBx .formBox h2 {
+    color: #607d8b;
+    font-weight: 600;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 4px solid rgb(88, 135, 49);
+    display: inline-block;
+    letter-spacing: 1px;
+
+} 
+
+section .contentBx .formBox .inputBx {
+    margin-bottom: 20px;
+} 
+
+section .contentBx .formBox .inputBx span {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display:inline-block;
+    color:#607d8b;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+section .contentBx .formBox .inputBx input{
+    width: 100%;
+    padding: 10px 20px;
+    outline: none;
+    font-weight: 400;
+    border: 1px solid #607d8b;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color:#607d8b;
+    background: transparent;
+    border-radius: 30px;
+
+}
+
+section .contentBx .formBox .inputBx input[type="submit"]{
+    background: rgb(88, 135, 49);
+    color:#fff;
+    outline:none;
+    border: none;
+    font-weight: 500;
+    cursor:pointer;
+}
+
+section .contentBx .formBox .inputBx input[type="submit"]:hover{
+    background: #7f9c55;
+}
+
+select option {
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+#select_age {
+    color:#fff;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    background: #8fa3ad;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    height: 37px;
+    border-radius: 10px;
+    width: 115px;
+    text-align: center;
+}
+
+#select_size {
+    color:#fff;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    background: #8fa3ad;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    height: 37px;
+    border-radius: 10px;
+    width: 95px;
+    text-align: center;
+}
+
+
+
+
+
+section .contentBx .formBox .inputBx p {
+    color: #607d8b;
+    text-align: center;
+}
+
+section .contentBx .formBox .inputBx p a{
+    color:rgb(88, 135, 49);
+    
+}    
+
+.flash-msg {
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 75px;
+    font-family:"Poppins", sans-serif;
+    color:#607d8b;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 1px;
+  
+}
+
+#main-title {
+    margin-bottom: 100px;
+    text-align: center;
+    font-family:"Poppins", sans-serif;
+    font-size: 53px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color:rgb(88, 135, 49);
+}
