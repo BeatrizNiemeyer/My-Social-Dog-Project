@@ -44,7 +44,7 @@ section .contentBx .formBox {
 }
 
 section .contentBx .formBox h2 {
-    color: #607d8b;
+    color: #43565f;
     font-weight: 600;
     font-size: 1.3em;
     text-transform: uppercase;
@@ -63,7 +63,7 @@ section .contentBx .formBox .inputBx span {
     font-size: 16px;
     margin-bottom: 5px;
     display:inline-block;
-    color:#607d8b;
+    color:#43565f;
     font-weight: 300;
     font-size: 16px;
     letter-spacing: 1px;
@@ -74,10 +74,10 @@ section .contentBx .formBox .inputBx input{
     padding: 10px 20px;
     outline: none;
     font-weight: 400;
-    border: 1px solid #607d8b;
+    border: 1px solid #43565f;
     font-size: 16px;
     letter-spacing: 1px;
-    color:#607d8b;
+    color:#43565f;
     background: transparent;
     border-radius: 30px;
 
@@ -135,7 +135,7 @@ select option {
 
 
 section .contentBx .formBox .inputBx p {
-    color: #607d8b;
+    color: #43565f;
     text-align: center;
 }
 
@@ -149,7 +149,7 @@ section .contentBx .formBox .inputBx p a{
     margin-top: 0px;
     margin-bottom: 75px;
     font-family:"Poppins", sans-serif;
-    color:#607d8b;
+    color:#2a3236;
     font-weight: 300;
     font-size: 14px;
     letter-spacing: 1px;

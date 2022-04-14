@@ -11,7 +11,7 @@ body {
     font-size: 40;
 }
 
-  button {
+  /* button {
     width: 75px;
     height: 40px;
     cursor: pointer;
@@ -21,19 +21,19 @@ body {
     padding: 5px;
     border-radius: 5px;
     color: white;
-  }
+  } */
   
   #header {
     padding: 10px;
-    color: #3577c2;
+    color: #18681a;
     font-size: 26px;
     font-family:"Poppins", sans-serif;
     display: flex;
     justify-content: space-between;
   }
-  #header button {
+  /* #header button {
     background-color:#92a1d1;
-  }
+  } */
   #calendar-container {
     margin-right:0px ;
     width: 871px;
@@ -42,7 +42,7 @@ body {
   #weekdays {
     width: 100%;
     display: flex;
-    color: #247BA0;
+    color: #0e160f;
   }
   #weekdays div {
     width: 115px;
@@ -61,15 +61,19 @@ body {
     box-sizing: border-box;
     background-color: white;
     margin: 5px;
-    box-shadow: 0px 0px 3px #ade4f1;
+    box-shadow: 0px 0px 3px #b0d3bc;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
+  .day:hover{
+    background: rgb(240, 250, 233);
+  }
+
   
   .day + #currentDay {
-    background-color:#abdaf1;
+    background-color:#74b18c;
   }
 
   .padding {
@@ -79,7 +83,7 @@ body {
   }
 
   .eventDay {
-    background-color:#ffd5d5;
+    background-color:#a9e6c4;
   }
 
   .margin {
@@ -88,7 +92,19 @@ body {
 
   .event {
       width: 300px;
-      margin-top: 70px;
+      margin-top: 20px;
+      text-align: center;
+  }
+
+
+  #event-form{
+    width: 300px;
+    margin-top: 71px;
+    text-align: center;
+    height: 308px;
+    background: rgba(33, 161, 72, 0.21);
+    border-radius: 14px;
+    padding-top: 20px;
   }
 
   #waiting{
@@ -112,6 +128,7 @@ body {
 .dropdown-item {
     font-weight: 400;
     letter-spacing: 1px;
+    width: 110%;
 }
 
 .form-control {
@@ -133,5 +150,29 @@ body {
   font-size: 26px;
   font-weight: 500;
   margin-bottom: 20px;
+  color:black
+}
 
+button{
+  outline: none;
+  background:#18681a;
+  margin-top: 20px;
+  border: none;
+  height: 45px;
+  width: 80px;
+  color:white;
+  font-size: 16px;
+  border-radius: 30px;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  color: rgb(253, 255, 253);
+  background: rgb(88, 135, 49);
+  transition: all 300ms linear;
+  cursor: pointer;
+}
+
+.flash-msg {
+  text-align: center;
 }

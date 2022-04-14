@@ -6,19 +6,20 @@
 
 {% block body %}
 
-<div class="main_inbox">
-<h1>Sent Messages</h1>
-<br>
-{% for user in list_of_users_for_inbox %}
-<ul>
-    <form action="/show_inbox">
-        <input type="hidden"  name="user_id" value={{user.user_id}}>
-            <li>{{user.fullname}}</li>
-                <button type="submit" >Go to inbox</button>
-    </form>
-</ul>
 
-</div>
+
+    <h1 class="main_inbox" id="title">Your Messages</h1>
+    <br>
+    {% for user in list_of_users_for_inbox %}
+    <ul>
+        <form class="main_inbox" action="/show_inbox">
+            <input type="hidden"  name="user_id" value={{user.user_id}}>
+                <li >{{user.fullname}}</li>
+                    <button  id="button" type="submit" >Go to inbox</button>
+        </form>
+    </ul>
+    
+
 
 {% endfor %}
 {% endblock %}

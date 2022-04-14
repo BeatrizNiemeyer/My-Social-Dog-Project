@@ -52,6 +52,7 @@ function AddDog(props) {
             <label>Dog Age (In years)</label>
             <br></br>
              <select 
+             class="select"
                 id="dogAge" 
                 name="dogAge" 
                 value={dogAge}
@@ -81,6 +82,7 @@ function AddDog(props) {
             <label>Dog Size</label>
             <br></br>
             <select 
+            class="select"
                 id="dogSize" 
                 name="dogSize" 
                 value={dogSize}
@@ -104,7 +106,7 @@ function AddDog(props) {
             <br></br>
             <br/>
 
-            <button type="button" onClick={addNewDog}>Add Dog</button>
+            <button  class="button" type="button" onClick={addNewDog}>Add Dog</button>
             <br/>
       
       </React.Fragment>

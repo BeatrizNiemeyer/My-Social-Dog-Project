@@ -15,7 +15,7 @@
 <div class="profile">
 
 <h3 id="info">Your Information</h3>
-<img src="{{user.profile_photo}}" width="150" height="150">
+<img id="img" src="{{user.profile_photo}}">
 <ul>
 <li>Name: {{user.fullname}}</li>
 <li>Email:{{user.email}}</li>
@@ -23,7 +23,7 @@
 </ul>
 <form action="/upload_picture" method="post" enctype="multipart/form-data">
     <input type="file" name="dog_picture">
-    <input type="submit">
+    <button  class="button" type="submit"> Submit</button>
 </form>
 <br>
 <br>
@@ -37,7 +37,7 @@
         Address <input type="text" name="address">
       </p>
 
-    <button type="submit"> Update user </button>
+    <button class="button" type="submit"> Update user </button>
 
 </form>
 <br>
@@ -49,7 +49,7 @@
 
 <form action="/delete_account">
 
-    <button type="submit"> Delete Account </button>
+    <button  class="button" type="submit"> Delete Account </button>
 
 </form>
 <br>

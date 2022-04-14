@@ -21,7 +21,7 @@ body {
 .card {
     background: rgb(247, 248, 246);
     border-radius: 6px;
-    display: inline-block;
+    display: inline-block ;
     height: 2.5px;
     width: 500px;
     margin-top: 80px;
@@ -36,7 +36,6 @@ body {
     margin-top: 40px;
     width: 158px;
     height: 158px;
-
 }
 
 .name {
@@ -49,11 +48,10 @@ body {
 .dog_desc {
     color: black;
     font-size: 18px;
-    margin-left: 65px;
-    margin-right: 65px;
     margin-top: 10px;
     margin-bottom: 0px;
     font-weight:399;
+
 }
 
 .btn-msg {
@@ -89,6 +87,7 @@ body {
 .dropdown-item {
     font-weight: 400;
     letter-spacing: 1px;
+    width: 110%;
 }
 
 .form-control {

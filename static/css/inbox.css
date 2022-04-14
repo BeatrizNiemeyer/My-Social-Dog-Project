@@ -35,6 +35,7 @@ h1{
 .dropdown-item {
     font-weight: 400;
     letter-spacing: 1px;
+    width: 110%;
 }
 
 .form-control {
@@ -45,3 +46,38 @@ h1{
 .btn-outline-success {
     color: #18681a;
   }
+
+.button{
+    outline: none;
+    background:#18681a;
+    margin-top: 20px;
+    border: none;
+    height: 45px;
+    width: 150px;
+    color:white;
+    font-size: 16px;
+    border-radius: 30px;
+}
+
+.button:hover {
+    color: rgb(253, 255, 253);
+    background: rgb(88, 135, 49);
+    transition: all 300ms linear;
+    cursor: pointer;
+}
+
+.select{
+
+    color:#fff;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    background: #8fa3ad;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    height: 37px;
+    border-radius: 10px;
+    width: 115px;
+    text-align: center;
+}

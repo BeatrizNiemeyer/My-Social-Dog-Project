@@ -39,7 +39,7 @@ function initMap() {
             autocomplete = new google.maps.places.Autocomplete(document.querySelector('#search'), {
                 componentRestrictions: {'country': ['us']},
                 fields: ['geometry', 'name', 'vicinity'],
-                types: ['establishment']
+                types: ['park']
             });
         
             autocomplete.addListener('place_changed', () =>{

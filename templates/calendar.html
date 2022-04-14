@@ -55,14 +55,13 @@
                 <br>
                 <div class="col-1">
                     
-                    <form action="/create_event" method="POST" class="event">
+                
+                    <form action="/create_event" method="POST" id="event-form" class="event">
                         <label id="event-details">Event Details:</label>
                         <br>
                             <p>
                                 <label for="event"> Event:</label>
                                 <input type="text" name="event_name" >
-                            
-                            
                             </p>
                     
                             <p>
@@ -75,13 +74,13 @@
                                 <input type="time" name="event_time">
                             </p>
                     
-                            <button id="event-button">Add</button>
+                            <button class="button" id="event-button">Add</button>
                         
                     </form>
 
                     <br>
-                    <b><div id="eventDay" class="event"></div></b>
-                    <div id="show-events" class="event"></div>
+                    <b><div id="eventDay" class="event event-day"></div></b>
+                    <div id="show-events" class="event event-day"></div>
                 
                 </div> 
 

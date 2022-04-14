@@ -4,6 +4,8 @@ body {
     /* background: rgb(178, 204, 178); */
     text-align:center;
     font-family:"Poppins", sans-serif;
+    letter-spacing: 1px;
+    font-weight: 400px;
 }
 
 .message {
@@ -26,6 +28,7 @@ body {
 .dropdown-item {
     font-weight: 400;
     letter-spacing: 1px;
+    width: 110%;
 }
 
 .form-control {
@@ -35,4 +38,39 @@ body {
 
 .btn-outline-success {
     color: #18681a;
+  }
+  
+.button{
+    outline: none;
+    background:#18681a;
+    margin-top: 20px;
+    border: none;
+    height: 45px;
+    width: 150px;
+    color:white;
+    font-size: 16px;
+    border-radius: 30px;
+}
+.button:hover {
+    color: rgb(253, 255, 253);
+    background: rgb(88, 135, 49);
+    transition: all 300ms linear;
+    cursor: pointer;
+}
+
+#msg-form{
+    width: 50%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+  }
+
+  p {
+      font-weight: 390;
+
   }

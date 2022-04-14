@@ -76,6 +76,7 @@ body {
 .dropdown-item {
     font-weight: 400;
     letter-spacing: 1px;
+
 }
 
 .form-control {
@@ -86,3 +87,20 @@ body {
 .btn-outline-success {
     color: #18681a;
   }
+
+.navbar {
+
+  padding-top: 4px;
+  padding-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+nav p, nav a, nav button {
+  margin: 0;
+  margin-right: 0px;
+}
+
+
+.nav-link {
+  transition:none;
+}
