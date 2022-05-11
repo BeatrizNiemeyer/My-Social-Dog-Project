@@ -8,16 +8,15 @@
 {% block body %}
 
 <div class="message">
-<h2>Write a message!</h2>
+    <h2>Write a message!</h2>
 
-<form action="/inbox"  method="POST"  >
-    <input type="hidden"  name="receiver_id" value={{receiver_id}}>
-   <b><p>
-        Enter your message <br><textarea name="message" id="msg-form" placeholder="Enter your message here..." ></textarea>
-    </p></b>
-
-    <button class="button" type="submit">Send Message</button>
-</form>
+    <form action="/inbox"  method="POST"  >
+        <input type="hidden"  name="receiver_id" value={{receiver_id}}>
+        <b><p>
+            Enter your message <br><textarea name="message" id="msg-form" placeholder="Enter your message here..." ></textarea>
+        </p></b>
+        <button class="button" type="submit">Send Message</button>
+    </form>
 </div>
 
 {% endblock %}

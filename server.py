@@ -33,8 +33,7 @@ def login():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    #Get user's password to check if the ented password is correct
-    # user_password = crud.get_password_by_email(email)
+    #Get user's password to check if the entered password is correct
     user = crud.get_user_by_email(email)
 
     if user and password:

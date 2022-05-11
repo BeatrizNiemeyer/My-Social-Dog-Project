@@ -35,6 +35,7 @@
                     </div>
 
                     {% else %}
+
                     <div class="dog_desc">
                         <br>
                             {{user.user.fullname}} is the owner of {{user.dog_name}}!
@@ -42,25 +43,23 @@
                             {{user.dog_name}} is {{user.dog_age}} years old
                         <br>
                             And this pup is a {{user.dog_size}} {{user.dog_breed}}
-                        <br>
-                        
+                        <br>                 
                     {% endif %}
-                   
 
                 {% endfor %}
-            </div>
+                    </div>
  
   
-                <br>
-                <form action="/write_message" >     
-                <input type="hidden"  name="user_id" value={{user.user_id}}>
-                    <button class="btn-msg" type="submit" >Send Message</button>
-                </form>
-                <br>
+                    <br>
+                    <form action="/write_message" >     
+                        <input type="hidden"  name="user_id" value={{user.user_id}}>
+                            <button class="btn-msg" type="submit" >Send Message</button>
+                    </form>
+                    <br>
             {% endif %}  
 
     {% endfor %}
-</div>
+        </div>
 
 </div>
     <script src="/static/js/dogFact.js"></script>

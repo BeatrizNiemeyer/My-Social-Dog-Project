@@ -8,19 +8,20 @@
 
 <div class="messages">
 
-<h1>Messages</h1>
-<br>
+    <h1>Messages</h1>
+    <br>
 
-<ul> 
-{% for message in sorted_messages_by_date %}
-    <li>  
-        {{message.sender.fullname}} - {{message.message_body}}
-    </li>
-{% endfor %}
-</ul>
-<form action="/write_message">
-    <input type="hidden"  name="user_id" value={{receiver_id}}>
-    <button class="button" type="submit"> Write a message </button>
-</form>
-{% endblock %}
+    <ul> 
+        {% for message in sorted_messages_by_date %}
+        <br>
+            <li>  
+                {{message.sender.fullname}} - {{message.message_body}}
+            </li>
+        {% endfor %}
+    </ul>
+    <form action="/write_message">
+        <input type="hidden"  name="user_id" value={{receiver_id}}>
+        <button class="button" type="submit"> Write a message </button>
+    </form>
+    {% endblock %}
 </div>

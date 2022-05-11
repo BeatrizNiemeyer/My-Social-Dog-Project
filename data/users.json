@@ -1,5 +1,27 @@
 [
     {
+        "fullname": "Steve",
+        "email": "steve@hb.com",
+        "password": "123",
+        "address": "11698 W Broad St, Richmond, VA 23233",
+        "dog_name": "Rudy",
+        "dog_age": "9",
+        "dog_size": "small",
+        "dog_breed": "corgi"
+    },
+    
+    {
+        "fullname": "Beth",
+        "email": "beth@hb.com",
+        "password": "123",
+        "address": "5401 W Broad St, Richmond, VA 23230",
+        "dog_name": "Penny",
+        "dog_age": "2",
+        "dog_size": "small",
+        "dog_breed": "mix"
+    },
+
+    {
         "fullname": "Ray",
         "email": "ray@hb.com",
         "password": "123",
@@ -14,21 +36,12 @@
         "email": "bia@hb.com",
         "password": "123",
         "address": "7 N 8th st Richmond VA 23219",
-        "dog_name": "Copper",
+        "dog_name": "Cooper",
         "dog_age": "2",
         "dog_size": "medium",
         "dog_breed": "goldendoodle"
     },
-    {
-        "fullname": "Beth",
-        "email": "beth@hb.com",
-        "password": "123",
-        "address": "5401 W Broad St, Richmond, VA 23230",
-        "dog_name": "Penny",
-        "dog_age": "2",
-        "dog_size": "small",
-        "dog_breed": "mix"
-    },
+
     {
         "fullname": "Mark",
         "email": "mark@hb.com",
@@ -39,16 +52,7 @@
         "dog_size": "large",
         "dog_breed": "pitbull"
     },
-    {
-        "fullname": "Steve",
-        "email": "steve@hb.com",
-        "password": "123",
-        "address": "11698 W Broad St, Richmond, VA 23233",
-        "dog_name": "Rudy",
-        "dog_age": "9",
-        "dog_size": "small",
-        "dog_breed": "corgi"
-    },
+
     {
         "fullname": "Lize",
         "email": "lize@hb.com",

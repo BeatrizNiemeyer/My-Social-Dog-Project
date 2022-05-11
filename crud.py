@@ -51,7 +51,6 @@ def create_dog_profile(user_id, dog_name, dog_age, dog_size, dog_breed):
 
     return dog
 
-
 def show_all_users():
     """ Return all users """
 
@@ -80,7 +79,6 @@ def create_message(sender_id, receiver_id, body, date):
     message = Message(sender_id=sender_id, receiver_id=receiver_id, message_body=body, message_date=date)
 
     return message
-
 
 
 def get_all_users():
@@ -139,7 +137,6 @@ def inbox_function(user_id, receiver_id):
 
 def get_latitude(address):
     """ Get coordinates to calculate distance """
-
 
     user_location = geolocator.geocode(address)
     user_latitude = user_location.latitude
@@ -237,8 +234,6 @@ def get_event(event_id):
     
 
     return events
-
-
 
 if __name__ == '__main__':
     from server import app

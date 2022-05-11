@@ -62,6 +62,7 @@ class Message(db.Model):
     # def __repr__(self):
     #     return f"<Message message_id={self.message_id} sender_id={self.sender_id} receiver_id={self.receiver_id}>"
 
+
 class Event(db.Model):
     """ Message information """
 
@@ -77,7 +78,6 @@ class Event(db.Model):
     user = db.relationship("User", back_populates="events")
 
 
-
 def connect_to_db(flask_app, db_uri="postgresql:///msd_data", echo=False):
     """Conecting to db"""
     
@@ -90,6 +90,7 @@ def connect_to_db(flask_app, db_uri="postgresql:///msd_data", echo=False):
 
     print("Connected to the db!")
 
+
 def example_data():
     """ Create example data for the test database"""
 
@@ -97,7 +98,6 @@ def example_data():
     
     db.session.add(user_1)
     db.session.commit()
-
 
 
 if __name__ == "__main__":
